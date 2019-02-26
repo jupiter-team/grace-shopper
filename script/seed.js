@@ -1,16 +1,28 @@
 'use strict'
 
 const db = require('../server/db')
-const {Product} = require('../server/db/models')
+const {Product, Member, Order, orderItems} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
-  // const users = await Promise.all([
-  //   User.create({email: 'cody@email.com', password: '123'}),
-  //   User.create({email: 'murphy@email.com', password: '123'})
-  // ])
+  const members = await Promise.all([
+    Member.create({
+        name: 'T. Lover',
+        email: 'tlover@email.com',
+        address: '6 Hanover Sq, New York, NY 10004',
+        password: 'ilovetea123',
+        dob: new Date('December 17, 1995'),
+    }),
+    Member.create({
+        name: 'Samantha Jones',
+        email: 'sjones@email.com',
+        address: 'Brooklyn, NY 10004',
+        password: 'teaforlife456',
+        dob: new Date('August 17, 1974'),
+    })
+  ])
 
   const products = await Promise.all([
     Product.create({
@@ -99,9 +111,70 @@ async function seed() {
     }),
   ])
 
+  const orders = await Promise.all([
+    Order.create({
+      memberId: '1',
+      status: 'fulfilled'
+    }),
+    Order.create({
+      memberId: '2',
+      status: 'processing'
+    }),
+    Order.create({
+      memberId: '1',
+      status: 'open'
+    }),
+  ])
 
+  const orderItems = await Promise.all([
+    orderItems.create({
+      orderId: 1,
+      productId: 1,
+      quantity: 3
+    }),
+    orderItems.create({
+      orderId: 1,
+      productId: 5,
+      quantity: 1
+    }),
+    orderItems.create({
+      orderId: 1,
+      productId: 1,
+      quantity: 3
+    }),
+    orderItems.create({
+      orderId: 2,
+      productId: 7,
+      quantity: 3
+    }),
+    orderItems.create({
+      orderId: 2,
+      productId: 4,
+      quantity: 1
+    }),
+    orderItems.create({
+      orderId: 3,
+      productId: 10,
+      quantity: 1
+    }),
+    orderItems.create({
+      orderId: 3,
+      productId: 2,
+      quantity: 2
+    }),
+    orderItems.create({
+      orderId: 3,
+      productId: 9,
+      quantity: 1
+    }),
+    orderItems.create({
+      orderId: 3,
+      productId: 11,
+      quantity: 2
+    }),
+  ])
 
-  console.log(`seeded ${users.length} users`)
+  // console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
 }
 
