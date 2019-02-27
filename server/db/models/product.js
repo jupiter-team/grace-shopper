@@ -21,7 +21,7 @@ const Product = db.define('product', {
     type: Sequelize.TEXT,
     defaultValue: 'This is the best tea ever.'
   },
-  image: {
+  imageUrl: {
     type: Sequelize.STRING,
     defaultValue: ''
   },
