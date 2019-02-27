@@ -1,21 +1,21 @@
 'use strict'
 
 const db = require('../server/db')
-const {Product, Member, Order, OrderItem} = require('../server/db/models')
+const {Product, User, Order, OrderItem} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
-  const members = await Promise.all([
-    Member.create({
+  const users = await Promise.all([
+    User.create({
         name: 'T. Lover',
         email: 'tlover@email.com',
         address: '6 Hanover Sq, New York, NY 10004',
         password: 'ilovetea123',
         dob: new Date('December 17, 1995'),
     }),
-    Member.create({
+    User.create({
         name: 'Samantha Jones',
         email: 'sjones@email.com',
         address: 'Brooklyn, NY 10004',
