@@ -15,7 +15,8 @@ const getOrder = order => ({type: GET_ORDER, order})
 // THUNK CREATORS
 export const fetchOrder = orderId => async dispatch => {
   try {
-    const order = await axios.get(`/api/orders/${orderId}`)
+    const {data: order} = await axios.get(`/api/orders/${orderId}`)
+    console.log('order from within reducer', order)
     dispatch(getOrder(order))
   } catch (error) {
     console.log(error)
