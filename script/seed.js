@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {Product, Member, Order, orderItems} = require('../server/db/models')
+const {Product, Member, Order, OrderItem} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -95,14 +95,14 @@ async function seed() {
       imageUrl: 'https://us.palaisdesthes.com/pub/media/catalog/product/cache/c687aa7517cf01e65c009f6943c2b1e9/7/2/723_1.jpg',
       status: 'available'
     }),
- Product.create({
+    Product.create({
       name: 'Organic Japanese Detox For Relaxation',
       price: 8.50,
       description: 'Japanese DETOX is a delicious recipe combining the detox benefits of Sencha green tea, spirulina, and buckwheat with soothing notes of nashi pear. This perfect choice for a relaxing break can be enjoyed both hot and iced. In Japanese culture, it is important to take time for oneself, to re-centre one’s thoughts and protect oneself against the daily turmoil and stress, which are considered toxic. In Japan, purifying the body means seeking relaxation.',
       imageUrl: 'https://us.palaisdesthes.com/pub/media/catalog/product/cache/c687aa7517cf01e65c009f6943c2b1e9/4/6/462-51842-2pg6anm2im.jpg',
       status: 'available'
     }),
- Product.create({
+    Product.create({
       name: 'Matcha Imperial',
       price: 9.50,
       description: 'Matcha Impérial is a round tea, mellow in the mouth, which develops delicious vegetal notes complemented by a particularly powerful umami flavour.\nIt is made with the greatest care using tencha leaves, a prestigious shade-grown tea: three weeks before harvest, the tea plants are deprived of most of the light, causing their leaves to develop unrivalled flavours.\nThe tencha leaves are then carefully ground in a stone mill until they have the fine texture of flour. This tea is not infused, but is whisked into water. This means the tea leaves are consumed, which explains the delicious flavour of Matcha Impérial as well as its many benefits. Matcha Impérial is a super-food with many qualities.\nRich in caffeine, with energising properties, and in theanine, which aids relaxation and concentration, one bowl of Matcha contains up to three times more catechin (a molecule with strong anti-oxidant properties) than any other green tea.',
@@ -127,47 +127,47 @@ async function seed() {
   ])
 
   const orderItems = await Promise.all([
-    orderItems.create({
+    OrderItem.create({
       orderId: 1,
       productId: 1,
       quantity: 3
     }),
-    orderItems.create({
+    OrderItem.create({
       orderId: 1,
       productId: 5,
       quantity: 1
     }),
-    orderItems.create({
+    OrderItem.create({
       orderId: 1,
       productId: 1,
       quantity: 3
     }),
-    orderItems.create({
+    OrderItem.create({
       orderId: 2,
       productId: 7,
       quantity: 3
     }),
-    orderItems.create({
+    OrderItem.create({
       orderId: 2,
       productId: 4,
       quantity: 1
     }),
-    orderItems.create({
+    OrderItem.create({
       orderId: 3,
       productId: 10,
       quantity: 1
     }),
-    orderItems.create({
+    OrderItem.create({
       orderId: 3,
       productId: 2,
       quantity: 2
     }),
-    orderItems.create({
+    OrderItem.create({
       orderId: 3,
       productId: 9,
       quantity: 1
     }),
-    orderItems.create({
+    OrderItem.create({
       orderId: 3,
       productId: 11,
       quantity: 2
