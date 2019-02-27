@@ -101,14 +101,14 @@ export class Cart extends Component {
               </a>
               <p>Quantity: {item.quantity}</p>
               <p>Price: {item.quantity * item.product.price}</p>
-              <button>Remove Item</button>
-              <button>Edit Quantity</button>
+              <button type="button">Remove Item</button>
+              <button type="button">Edit Quantity</button>
             </div>
           ))}
         </div>
         Total Price: {cartTotalPrice(cart) || 0}
-        <button>Remove All</button>
-        <button>Checkout</button>
+        <button type="button">Remove All</button>
+        <button type="button">Checkout</button>
       </div>
     )
   }
