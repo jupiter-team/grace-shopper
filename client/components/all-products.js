@@ -18,6 +18,7 @@ class AllProducts extends Component {
             <img src={product.imageUrl} />
             <p>{product.name}</p>
             <p>{product.price}</p>
+            <button>Add to Cart</button>
           </div>
         ))}
       </div>
