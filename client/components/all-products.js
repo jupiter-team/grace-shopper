@@ -1,33 +1,36 @@
-import React from 'react'
+import React, {Component} from 'react'
 // import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import {fetchProducts} from '../store/all-products'
 
-/**
- * COMPONENT
- */
-export const AllProducts = props => {
+// COMPONENT
+class AllProducts extends Component {
+  componentDidMount() {
+    this.props.loadProducts()
+  }
 
-  return (
-    <div>
-      <h3>Welcome, {email}</h3>
-    </div>
-  )
-}
-
-/**
- * CONTAINER
- */
-const mapState = state => {
-  return {
-    email: state.user.email
+  render() {
+    return (
+      <div>
+        <h3>All Products</h3>
+        {this.props.products.map(product => (
+          <div key={product.id}>
+            <img src={product.imageUrl} />
+            <p>{product.name}</p>
+            <p>{product.price}</p>
+          </div>
+        ))}
+      </div>
+    )
   }
 }
 
-export default connect(mapState)(UserHome)
+const mapStateToProps = state => ({
+  products: state.products
+})
 
-/**
- * PROP TYPES
- */
-UserHome.propTypes = {
-  email: PropTypes.string
-}
+const mapDispatchToProps = dispatch => ({
+  loadProducts: () => dispatch(fetchProducts())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AllProducts)
