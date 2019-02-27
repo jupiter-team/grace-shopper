@@ -16,12 +16,12 @@ install:
 before_script:
   - psql -c 'create database "jupiter-chain-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
 
-# before_deploy:
-#   - npm run build-client # make the bundle
-#   - rm -rf node_modules # omit from the tarball, since we skip cleanup
-# deploy:
-#   skip_cleanup: true # prevents travis from deleting the build
-#   provider: heroku
-#   app: YOUR-HEROKU-APP-NAME-HERE # see README
-#   api_key:
-#     secure: YOUR-***ENCRYPTED***-API-KEY-HERE # see README
+before_deploy:
+  - npm run build-client # make the bundle
+  - rm -rf node_modules # omit from the tarball, since we skip cleanup
+deploy:
+  skip_cleanup: true # prevents travis from deleting the build
+  provider: heroku
+  app: jupiter-chain # see README
+  api_key:
+    secure: OTHjrEklwsap3GgSBfTUNurMGlKdW4L8JAF43sYCkuoFrNc+X73b8J/40RIpvtJIdCtDJkQJ75AStIGdwpz09d0lRwIEGfbezJYSygisx56uFFga+I9mG7tr6Pg1hI88kul1zieUZT5vbJBHbe01Ig9v7HUIEnkDQ4Olj2Ei51oh8dFaYUlhIybSjP4WgIEicMhVcGL83biwnKIqhgSi7ydGT9nh5iRp+V4hxXTy9jo/QpyOaL/voLRCaRTiHdaLJEOZqyOHhRqukQvuC0J6X+ONP3kyBpQFQYLF9Y6ywV9QjjprM+0lM2FpD5UGB2l5T3ewafSLG9nBRnC5leicS6Pw23obwyNljsaKUUAFa22mN1IMpWWKt94HflUNzQ+tfRMIOBfrXJW6Ud3efnB1ylvEk6VVKqjNjZJj/NmH98vcY1YWFqk7J7sb3RdXzFDRGYgbFIp4zIq8uQtn6kSr0UZYaIx6dsp9V/UWPxjCqpPiIJTHPmIarQEwyG3z+4WpVxFsGKoWWLVGL627HlGfjqCcSM50q41pjmXdreoWYyUPF0IRkNo7mYXlpUbtaZPI8jFSqvETRz/V7I0VogFSiCiACbkbMe3U+EzARmsFo8sjQfTGXol+E+IP5Jw45HzlgHzg/1jaxVg3x4GRyg+cGkgyMZtD3HdDNz1sXfv1hrw= # see README
