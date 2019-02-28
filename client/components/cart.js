@@ -12,10 +12,10 @@ const cartTotalPrice = cart => {
 
 class Cart extends Component {
   componentDidMount() {
-    console.log(this.props.user)
-    this.props.getCart(2)
+    this.props.getCart(cart)
   }
   render() {
+    //We are checking to see if there is a user logged in.
     if (this.props.user.id) {
       const cart = this.props.cart
     } else {
