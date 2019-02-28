@@ -12,9 +12,11 @@ const cartTotalPrice = cart => {
 
 class Cart extends Component {
   componentDidMount() {
-    this.props.getCart(cart)
+    this.props.getCart(cartId)
   }
   render() {
+    //We are currently setting dummy cartId but will later connect to user.
+    const cartId = 1
     //We are checking to see if there is a user logged in.
     if (this.props.user.id) {
       const cart = this.props.cart
