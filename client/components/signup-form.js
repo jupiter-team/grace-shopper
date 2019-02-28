@@ -1,17 +1,23 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import {auth} from '../store'
+import {signup} from '../store'
 
 /**
  * COMPONENT
  */
 const SignupForm = props => {
-  const {name, handleSubmit, error} = props
+  const {handleSubmit, error} = props
 
   return (
     <div>
-      <form onSubmit={handleSubmit} name={name}>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="name">
+            <small>Name</small>
+          </label>
+          <input name="name" type="text" />
+        </div>
         <div>
           <label htmlFor="email">
             <small>Email</small>
@@ -19,12 +25,24 @@ const SignupForm = props => {
           <input name="email" type="text" />
         </div>
         <div>
-          <label htmlFor="password">
-            <small>Password</small>
+          <label htmlFor="address">
+            <small>Address</small>
           </label>
-          <input name="password" type="password" />
+          <input name="address" type="text" />
         </div>
         <div>
+          <label htmlFor="dob">
+            <small>Date of Birth</small>
+          </label>
+          <input name="dob" type="date" />
+        </div>
+        <div>
+          <div>
+            <label htmlFor="password">
+              <small>Password</small>
+            </label>
+            <input name="password" type="password" />
+          </div>
           <button type="submit">Sign up</button>
         </div>
         {error && error.response && <div> {error.response.data} </div>}
@@ -41,17 +59,9 @@ const SignupForm = props => {
  *   function, and share the same Component. This is a good example of how we
  *   can stay DRY with interfaces that are very similar to each other!
  */
-// const mapLogin = state => {
-//   return {
-//     name: 'login',
-//     displayName: 'Login',
-//     error: state.user.error
-//   }
-// }
 
 const mapSignup = state => {
   return {
-    name: 'signup',
     error: state.user.error
   }
 }
@@ -60,22 +70,22 @@ const mapDispatch = dispatch => {
   return {
     handleSubmit(evt) {
       evt.preventDefault()
-      const formName = evt.target.name
+      const name = evt.target.name.value
       const email = evt.target.email.value
+      const address = evt.target.address.value
+      const dob = evt.target.dob.value
       const password = evt.target.password.value
-      dispatch(auth(email, password, formName))
+      dispatch(signup(name, email, address, dob, password))
     }
   }
 }
 
-// export const Login = connect(mapLogin, mapDispatch)(AuthForm)
-export const Signup = connect(mapSignup, mapDispatch)(SignupForm)
+export default connect(mapSignup, mapDispatch)(SignupForm)
 
 /**
  * PROP TYPES
  */
 SignupForm.propTypes = {
-  name: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.object
 }
