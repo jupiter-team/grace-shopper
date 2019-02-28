@@ -13,3 +13,13 @@ router.get('/:orderId', async (req, res, next) => {
     next(error)
   }
 })
+
+router.post('/', async (req, res, next) => {
+  console.log('hello')
+  try {
+    // need to set order id
+    await Order.create(req.body)
+  } catch (err) {
+    next(err)
+  }
+})
