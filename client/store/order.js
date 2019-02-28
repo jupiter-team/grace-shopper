@@ -18,7 +18,6 @@ export const fetchOrder = orderId => async dispatch => {
   try {
     const res = await axios.get(`/api/orders/${orderId}`)
     const order = res.data
-    console.log('order from within reducer', order)
     dispatch(getOrder(order))
   } catch (error) {
     console.log(error)
