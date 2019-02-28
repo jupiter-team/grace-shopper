@@ -83,28 +83,33 @@ const cartTotalPrice = cart => {
 
 export class Cart extends Component {
   componentDidMount() {
-    // this.props.fetchOrder('1')
+    console.log('getCart function', this.props.getCart)
+    // this.props.getCart(2)
   }
   render() {
-    //   const cart = this.props.cart
+    // const cart = this.props.cart
     console.log('props cart', this.props.cart)
     return (
       <div className="cart-page">
         Welcome To Your Cart!
         <div className="items-list">
           Your items:
-          {cart.orderItems.map(item => (
-            <div className="item" key={item.id}>
-              <a>
-                <img src={item.product.imageUrl} />
-                <h4>{item.product.name}</h4>
-              </a>
-              <p>Quantity: {item.quantity}</p>
-              <p>Price: {item.quantity * item.product.price}</p>
-              <button type="button">Remove Item</button>
-              <button type="button">Edit Quantity</button>
-            </div>
-          ))}
+          {cart ? (
+            cart.orderItems.map(item => (
+              <div className="item" key={item.id}>
+                <a>
+                  <img src={item.product.imageUrl} />
+                  <h4>{item.product.name}</h4>
+                </a>
+                <p>Quantity: {item.quantity}</p>
+                <p>Price: {item.quantity * item.product.price}</p>
+                <button type="button">Remove Item</button>
+                <button type="button">Edit Quantity</button>
+              </div>
+            ))
+          ) : (
+            <p>Cart empty</p>
+          )}
         </div>
         Total Price: {cartTotalPrice(cart) || 0}
         <button type="button">Remove All</button>
@@ -122,7 +127,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchOrder: orderId => dispatch(fetchOrder(orderId))
+    getCart: orderId => dispatch(fetchOrder(orderId))
   }
 }
 

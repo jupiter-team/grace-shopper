@@ -5,6 +5,7 @@ import history from '../history'
 const GET_ORDER = 'GET_ORDER'
 
 // INITIAL STATE
+
 const currentOrder = {
   orderItems: []
 }
@@ -15,7 +16,8 @@ const getOrder = order => ({type: GET_ORDER, order})
 // THUNK CREATORS
 export const fetchOrder = orderId => async dispatch => {
   try {
-    const {data: order} = await axios.get(`/api/orders/${orderId}`)
+    const res = await axios.get(`/api/orders/${orderId}`)
+    const order = res.data
     console.log('order from within reducer', order)
     dispatch(getOrder(order))
   } catch (error) {
