@@ -15,15 +15,7 @@ class Checkout extends Component {
     return (
       <div>
         <h1>Your order has been submitted!</h1>
-        <h2>Order List</h2>
-        {cart.orderItems.map(item => (
-          <div key={item.id}>
-            <h4>{item.product.name}</h4>
-            <p>Price:{item.product.price}</p>
-            <p>Quantity:{item.quantity}</p>
-          </div>
-        ))}
-        Total Amount: {cartTotalPrice(cart)}
+        Price(cart)}
       </div>
     )
   }
