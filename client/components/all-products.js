@@ -6,7 +6,7 @@ import {
   createOrder,
   createOrderItem
 } from '../store/all-products'
-import {SSL_OP_NETSCAPE_REUSE_CIPHER_CHANGE_BUG} from 'constants'
+// import {SSL_OP_NETSCAPE_REUSE_CIPHER_CHANGE_BUG} from 'constants'
 
 // COMPONENT
 class AllProducts extends Component {
@@ -29,7 +29,8 @@ class AllProducts extends Component {
       //check if session.cart.orderItems arr has same productId
       session.cart.orderItems.forEach(orderItem => {
         if (orderItem.productId === productId) {
-          this.props.sendQuantity(orderItem.id)
+          orderItem.quantity++
+          this.props.sendQuantityUpdate(orderItem.id)
         }
       })
 

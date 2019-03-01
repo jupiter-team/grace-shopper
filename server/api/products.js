@@ -12,9 +12,9 @@ router.get('/all', async (req, res, next) => {
   }
 })
 
-router.put('/all', async (req, res, next) => {
+router.put('/:productId', async (req, res, next) => {
   try {
-    const orderItem = await OrderItem.create(req.body)
+    const orderItem = await OrderItem.findById()
   } catch (err) {
     next(err)
   }
