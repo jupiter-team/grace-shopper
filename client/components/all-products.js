@@ -1,18 +1,14 @@
 import React, {Component} from 'react'
-// import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {
-  fetchProducts,
-  createOrder,
-  createOrderItem
-} from '../store/all-products'
-// import {SSL_OP_NETSCAPE_REUSE_CIPHER_CHANGE_BUG} from 'constants'
+
+import {fetchProducts} from '../store/all-products'
+
+import {createOrder, createOrderItem, updateOrderItem} from '../store/cart'
 
 // COMPONENT
 class AllProducts extends Component {
   constructor() {
     super()
-
     this.handleAddCart = this.handleAddCart.bind(this)
   }
 
@@ -20,20 +16,15 @@ class AllProducts extends Component {
     const productId = event.target.name
     const orderId = session.cart.orderId
 
-    //session is currently undefined. how do we access it?
     if (!session.cart) {
-      //if there is no cart on the session, create a new order in DB
       this.props.sendOrder(session.userId)
-      //then create order item
     } else {
-      //check if session.cart.orderItems arr has same productId
       session.cart.orderItems.forEach(orderItem => {
         if (orderItem.productId === productId) {
           orderItem.quantity++
-          this.props.sendQuantityUpdate(orderItem.id)
+          this.props.sendQuantityUpdate(orderItem)
         }
       })
-
       if (session.cart.orderItems) {
         //if there is an orderItem with productId, quantity++
         //else
@@ -83,14 +74,15 @@ class AllProducts extends Component {
 }
 
 const mapStateToProps = state => ({
+  orderItems: state.currentOder.orderItems,
   products: state.products
 })
 
 const mapDispatchToProps = dispatch => ({
   loadProducts: () => dispatch(fetchProducts()),
   sendOrder: userId => dispatch(createOrder(userId)),
-  sendOrderItem: productId => dispatch(createOrderItem)(productId),
-  sendQuantity: orderItemId => dispatch(orderItemId)
+  sendOrderItem: productId => dispatch(createOrderItem(productId)),
+  sendQuantityUpdate: orderItem => dispatch(updateOrderItem(orderItem))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllProducts)
