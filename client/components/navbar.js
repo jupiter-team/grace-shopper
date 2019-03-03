@@ -10,7 +10,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
       <ul className="navbar-nav mr-auto">
         <li className="nav-item active">
           <a className="nav-link" href="#">
-            Shop
+            Our Teas
           </a>
         </li>
         <li className="nav-item">
