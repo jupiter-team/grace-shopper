@@ -2,40 +2,37 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
 import {fetchProducts} from '../store/all-products'
-
-import {createOrder, createOrderItem, updateOrderItem} from '../store/cart'
+import {createNewOrderItem, addOneToOrderItem, createNewOrder} from '../store'
 
 // COMPONENT
 class AllProducts extends Component {
   constructor() {
     super()
-    this.handleAddCart = this.handleAddCart.bind(this)
-  }
-
-  handleAddCart(event) {
-    const productId = event.target.name
-    const orderId = session.cart.orderId
-
-    if (!session.cart) {
-      this.props.sendOrder(session.userId)
-    } else {
-      session.cart.orderItems.forEach(orderItem => {
-        if (orderItem.productId === productId) {
-          orderItem.quantity++
-          this.props.sendQuantityUpdate(orderItem)
-        }
-      })
-      if (session.cart.orderItems) {
-        //if there is an orderItem with productId, quantity++
-        //else
-        //create a new order item with orderId from session.cart
-        this.props.sendOrderItem(productId, orderId)
-      }
-    }
+    this.handleAddToCart = this.handleAddToCart.bind(this)
   }
 
   componentDidMount() {
     this.props.loadProducts()
+  }
+
+  handleAddToCart(event) {
+    const product = event.target.name
+    const user = this.props.state.user
+    const orderItems = this.props.orderItems
+    const orderId = this.props.orderItems[0].orderItems[0].orderId
+
+    if (user && orderItems.length) {
+      const existOrderItem = orderItems.find(
+        orderItem => orderItem.productId === product.id
+      )
+      if (!existOrderItem) {
+        this.props.sendNewOrderItem(product.id, orderId)
+      } else {
+        this.props.sendQuantityUpdate(existOrderItem.id)
+      }
+    } else {
+      this.props.sendNewOrder(user.id, product)
+    }
   }
 
   render() {
@@ -56,9 +53,9 @@ class AllProducts extends Component {
                 <h6 className="product-title">{product.name}</h6>
                 <p>{product.price}</p>
                 <button
-                  name={product.id}
+                  name={product}
                   type="button"
-                  onClick={this.handleAddCart}
+                  onClick={this.handleAddToCart}
                 >
                   Add to Cart
                 </button>
@@ -74,15 +71,16 @@ class AllProducts extends Component {
 }
 
 const mapStateToProps = state => ({
-  orderItems: state.currentOder.orderItems,
-  products: state.products
+  user: state.user,
+  orderItems: state.initialCart.orderItems
 })
 
 const mapDispatchToProps = dispatch => ({
   loadProducts: () => dispatch(fetchProducts()),
-  sendOrder: userId => dispatch(createOrder(userId)),
-  sendOrderItem: productId => dispatch(createOrderItem(productId)),
-  sendQuantityUpdate: orderItem => dispatch(updateOrderItem(orderItem))
+  sendNewOrderItem: (productId, orderId) =>
+    dispatch(createNewOrderItem(productId, orderId)),
+  sendQuantityUpdate: orderItemId => dispatch(addOneToOrderItem(orderItemId)),
+  sendNewOrder: (userId, product) => dispatch(createNewOrder(userId, product))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllProducts)
