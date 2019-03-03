@@ -9,13 +9,27 @@ class Checkout extends Component {
   componentDidMount() {
     this.props.getCart(cartId)
   }
+
+  handleConfirm() {
+    if (loggedInUser) {
+      userCheckout()
+    } else {
+      guestCheckout(guestInfo)
+    }
+  }
+
   render() {
-    const {cart} = this.props
+    const {cart, loggedInUser} = this.props
 
     return (
       <div>
-        <h1>Your order has been submitted!</h1>
+        <h1>Please review the order below:</h1>
         Price(cart)}
+        <form>
+          <label>
+            <input>Address:</input>
+          </label>
+        </form>
       </div>
     )
   }
@@ -23,7 +37,8 @@ class Checkout extends Component {
 
 const mapStateToProps = state => {
   return {
-    cart: state.currentOrder
+    cart: state.currentOrder,
+    loggedInUser: state.user
   }
 }
 
