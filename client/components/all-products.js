@@ -13,7 +13,6 @@ class AllProducts extends Component {
     const products = this.props.products
     return (
       <div className="container">
-        <h3>All Products</h3>
         <div className="row">
           {products && products.length ? (
             this.props.products.map(product => (
@@ -21,9 +20,8 @@ class AllProducts extends Component {
                 <div className="card">
                   <img src={product.imageUrl} className="card-img-top" />
                   <div className="card-body">
-                    <h6>{product.name}</h6>
-                    <p>{product.price}</p>
-                    <button type="button">Add to Cart</button>
+                    <span className="product-title">{product.name}</span>
+                    <p className="product-price">${product.price}</p>
                   </div>
                 </div>
               </div>
