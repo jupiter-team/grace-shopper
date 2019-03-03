@@ -19,3 +19,17 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+/*--------CARDS---------*/
+
+.card {
+  border: none !important;
+}
+
+.card h6 {
+  font-size: 11px;
+}
+
+.card-body {
+  text-align: center;
+}

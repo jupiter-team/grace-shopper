@@ -12,20 +12,26 @@ class AllProducts extends Component {
   render() {
     const products = this.props.products
     return (
-      <div>
+      <div className="container">
         <h3>All Products</h3>
-        {products && products.length ? (
-          this.props.products.map(product => (
-            <div key={product.id}>
-              <img src={product.imageUrl} />
-              <p>{product.name}</p>
-              <p>{product.price}</p>
-              <button type="button">Add to Cart</button>
-            </div>
-          ))
-        ) : (
-          <p>No products</p>
-        )}
+        <div className="row">
+          {products && products.length ? (
+            this.props.products.map(product => (
+              <div className="col-sm-6 col-lg-4" key={product.id}>
+                <div className="card">
+                  <img src={product.imageUrl} className="card-img-top" />
+                  <div className="card-body">
+                    <h6>{product.name}</h6>
+                    <p>{product.price}</p>
+                    <button type="button">Add to Cart</button>
+                  </div>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p>No products</p>
+          )}
+        </div>
       </div>
     )
   }
