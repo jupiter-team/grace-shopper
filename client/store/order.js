@@ -1,14 +1,8 @@
 import axios from 'axios'
-import history from '../history'
+// import history from '../history'
 
 // ACTION TYPES
 const GET_ORDER = 'GET_ORDER'
-
-// INITIAL STATE
-
-const currentOrder = {
-  orderItems: []
-}
 
 // ACTION CREATORS
 const getOrder = order => ({type: GET_ORDER, order})
@@ -22,6 +16,11 @@ export const fetchOrder = orderId => async dispatch => {
   } catch (error) {
     console.log(error)
   }
+}
+
+// INITIAL STATE
+const currentOrder = {
+  orderItems: []
 }
 
 // REDUCER
