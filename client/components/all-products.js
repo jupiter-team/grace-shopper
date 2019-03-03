@@ -17,9 +17,9 @@ class AllProducts extends Component {
 
   handleAddToCart(event) {
     const product = event.target.name
-    const user = this.props.state.user
+    const user = this.props.user
     const orderItems = this.props.orderItems
-    const orderId = this.props.orderItems[0].orderItems[0].orderId
+    const orderId = this.props.orderItems[0].orderId
 
     if (user && orderItems.length) {
       const existOrderItem = orderItems.find(
@@ -72,7 +72,7 @@ class AllProducts extends Component {
 
 const mapStateToProps = state => ({
   user: state.user,
-  orderItems: state.initialCart.orderItems
+  orderItems: state.cart.orderItems
 })
 
 const mapDispatchToProps = dispatch => ({
