@@ -2,12 +2,12 @@ import axios from 'axios'
 // import history from '../history'
 
 // ACTION TYPES
-const GOT_ORDER = 'GET_ORDER'
+const GOT_ORDER = 'GOT_ORDER'
 const CREATED_ORDER_ITEM = 'CREATED_ORDER_ITEM'
 const UPDATED_ORDER_ITEM = 'UPDATED_ORDER'
 
 // ACTION CREATORS
-const gotOrder = order => ({type: GET_ORDER, order})
+const gotOrder = order => ({type: GOT_ORDER, order})
 
 const createdOrderItem = orderItem => ({type: CREATED_ORDER_ITEM, orderItem})
 

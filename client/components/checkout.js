@@ -20,7 +20,6 @@ class Checkout extends Component {
 
   render() {
     const {cart, loggedInUser} = this.props
-
     return (
       <div>
         <h1>Please confirm the order below:</h1>
@@ -39,12 +38,12 @@ class Checkout extends Component {
         <h3>Your Shipping Information:</h3>
         {loggedInUser ? (
           <div>
-            Name: {loggedInUser.name}
-            Address: {loggedInUser.address}
-            <button onClick={userSubmit}>Confirm order</button>
+            <p>Name: {loggedInUser.name}</p>
+            <p>Address: {loggedInUser.address}</p>
+            <button onClick={this.userSubmit}>Confirm order</button>
           </div>
         ) : (
-          <form onSubmit={guestSubmit}>
+          <form onSubmit={this.guestSubmit}>
             <div>
               <label htmlFor="name">
                 <small>Name</small>
@@ -73,7 +72,7 @@ class Checkout extends Component {
 
 const mapStateToProps = state => {
   return {
-    cart: state.currentOrder,
+    cart: state.cart,
     loggedInUser: state.user
   }
 }
