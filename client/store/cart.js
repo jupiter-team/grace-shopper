@@ -2,20 +2,14 @@ import axios from 'axios'
 // import history from '../history'
 
 // ACTION TYPES
-const CREATED_ORDER = 'CREATED_ORDER'
+const GOT_ORDER = 'GET_ORDER'
 const CREATED_ORDER_ITEM = 'CREATED_ORDER_ITEM'
 const UPDATED_ORDER_ITEM = 'UPDATED_ORDER'
 
 // ACTION CREATORS
-const createdOrder = order => ({
-  type: CREATED_ORDER,
-  order
-})
+const gotOrder = order => ({type: GET_ORDER, order})
 
-const createdOrderItem = order => ({
-  type: CREATED_ORDER_ITEM,
-  order
-})
+const createdOrderItem = orderItem => ({type: CREATED_ORDER_ITEM, orderItem})
 
 const updatedOrderItem = updatedOrder => ({
   type: UPDATED_ORDER_ITEM,
@@ -23,10 +17,20 @@ const updatedOrderItem = updatedOrder => ({
 })
 
 // THUNK CREATORS
-export const createOrder = userId => async dispatch => {
+export const fetchOrder = orderId => async dispatch => {
   try {
-    const res = await axios.post('/api/orders', userId)
-    dispatch(createdOrder(res.data))
+    const res = await axios.get(`/api/orders/${orderId}`)
+    const order = res.data
+    dispatch(gotOrder(order))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const createOrder = (userId, guestId) => async dispatch => {
+  try {
+    const res = await axios.post('/api/orders', userId, guestId)
+    dispatch(gotOrder(res.data))
   } catch (error) {
     console.error(error)
   }
@@ -50,6 +54,25 @@ export const updateOrderItem = orderItem => async dispatch => {
   }
 }
 
+export const guestCheckout = guestInfo => async dispatch => {
+  try {
+    const res = await axios.create('/guests', guestInfo)
+    const guest = res.data
+    dispatch(createOrder(null, guest.id))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const userCheckout = () => async dispatch => {
+  try {
+    const orderToSubmit = await order.put('/cart/submit')
+    dispatch(gotOrder(initialCart))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 // INITIAL STATE
 const initialCart = {
   orderItems: []
@@ -58,11 +81,11 @@ const initialCart = {
 // REDUCER
 export default function(state = initialCart, action) {
   switch (action.type) {
-    case CREATED_ORDER:
-      return {}
+    case GOT_ORDER:
+      return action.order
 
     case CREATED_ORDER_ITEM:
-      return {}
+      return {...state, orderItems: [...state.orderItems, action.orderItem]}
 
     case UPDATED_ORDER_ITEM:
       return {
