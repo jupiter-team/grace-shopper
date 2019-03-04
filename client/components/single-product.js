@@ -2,7 +2,11 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
 import {fetchSingleProduct} from '../store/all-products'
-import {createNewOrderItem, addOneToOrderItem, createNewOrder} from '../store'
+import {
+  createNewOrderItem,
+  updateQuantityOfOrderItem,
+  createNewOrder
+} from '../store'
 
 // COMPONENT
 class SingleProduct extends Component {
@@ -15,23 +19,23 @@ class SingleProduct extends Component {
     this.props.loadSingleProduct()
   }
 
-  handleAddToCart(event) {
-    const product = event.target.name
+  handleAddToCart() {
+    const product = this.props.selectedProduct
     const user = this.props.user
     const orderItems = this.props.orderItems
-    const orderId = this.props.orderItems[0].orderId
 
     if (user && orderItems.length) {
-      const existOrderItem = orderItems.find(
+      const orderId = this.props.orderItems[0].orderId
+      const isExistOrderItem = orderItems.find(
         orderItem => orderItem.productId === product.id
       )
-      if (!existOrderItem) {
+      if (!isExistOrderItem) {
         this.props.sendNewOrderItem(product.id, orderId)
       } else {
-        this.props.sendQuantityUpdate(existOrderItem.id)
+        this.props.sendQuantityUpdate(isExistOrderItem.id, orderId)
       }
     } else {
-      this.props.sendNewOrder(user.id, product)
+      this.props.sendNewOrder(user.id, product.id)
     }
   }
 
@@ -49,7 +53,7 @@ class SingleProduct extends Component {
           />
           <p>{product.description}</p>
           <p>{product.price}</p>
-          <button name={product} type="button" onClick={this.handleAddToCart}>
+          <button type="button" onClick={this.handleAddToCart}>
             Add to Cart
           </button>
         </div>
@@ -69,8 +73,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(fetchSingleProduct(ownProps.match.params.productId)),
   sendNewOrderItem: (productId, orderId) =>
     dispatch(createNewOrderItem(productId, orderId)),
-  sendQuantityUpdate: orderItemId => dispatch(addOneToOrderItem(orderItemId)),
-  sendNewOrder: (userId, product) => dispatch(createNewOrder(userId, product))
+  sendQuantityUpdate: (orderItemId, orderId) =>
+    dispatch(updateQuantityOfOrderItem(orderItemId, orderId)),
+  sendNewOrder: (userId, productId) =>
+    dispatch(createNewOrder(userId, productId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct)

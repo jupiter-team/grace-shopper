@@ -7,33 +7,8 @@ import {createNewOrderItem, addOneToOrderItem, createNewOrder} from '../store'
 
 // COMPONENT
 class AllProducts extends Component {
-  constructor() {
-    super()
-    this.handleAddToCart = this.handleAddToCart.bind(this)
-  }
-
   componentDidMount() {
     this.props.loadProducts()
-  }
-
-  handleAddToCart(event) {
-    const product = event.target.name
-    const user = this.props.user
-    const orderItems = this.props.orderItems
-    const orderId = this.props.orderItems[0].orderId
-
-    if (user && orderItems.length) {
-      const existOrderItem = orderItems.find(
-        orderItem => orderItem.productId === product.id
-      )
-      if (!existOrderItem) {
-        this.props.sendNewOrderItem(product.id, orderId)
-      } else {
-        this.props.sendQuantityUpdate(existOrderItem.id)
-      }
-    } else {
-      this.props.sendNewOrder(user.id, product)
-    }
   }
 
   render() {
@@ -57,13 +32,13 @@ class AllProducts extends Component {
                   <Link to={'/products/' + product.id}>{product.name}</Link>
                 </h6>
                 <p>{product.price}</p>
-                <button
+                {/* <button
                   name={product}
                   type="button"
                   onClick={this.handleAddToCart}
                 >
                   Add to Cart
-                </button>
+                </button> */}
               </div>
             ))
           ) : (
@@ -82,11 +57,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  loadProducts: () => dispatch(fetchProducts()),
-  sendNewOrderItem: (productId, orderId) =>
-    dispatch(createNewOrderItem(productId, orderId)),
-  sendQuantityUpdate: orderItemId => dispatch(addOneToOrderItem(orderItemId)),
-  sendNewOrder: (userId, product) => dispatch(createNewOrder(userId, product))
+  loadProducts: () => dispatch(fetchProducts())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllProducts)
