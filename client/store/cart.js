@@ -2,12 +2,12 @@ import axios from 'axios'
 // import history from '../history'
 
 // ACTION TYPES
-const GOT_ORDER = 'GOT_ORDER'
+const GOT_CART = 'GOT_CART'
 const CREATED_ORDER_ITEM = 'CREATED_ORDER_ITEM'
 const UPDATED_ORDER_ITEM = 'UPDATED_ORDER'
 
 // ACTION CREATORS
-const gotOrder = order => ({type: GOT_ORDER, order})
+const gotCart = cart => ({type: GOT_CART, cart})
 
 const createdOrderItem = orderItem => ({type: CREATED_ORDER_ITEM, orderItem})
 
@@ -17,13 +17,12 @@ const updatedOrderItem = updatedOrder => ({
 })
 
 // THUNK CREATORS
-export const fetchOrder = orderId => async dispatch => {
+export const fetchCart = () => async dispatch => {
   try {
-    const res = await axios.get(`/api/orders/${orderId}`)
-    const order = res.data
-    dispatch(gotOrder(order))
+    const cart = await axios.get('/api/cart')
+    dispatch(gotCart(cart.data))
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 }
 
@@ -81,8 +80,8 @@ const initialCart = {
 // REDUCER
 export default function(state = initialCart, action) {
   switch (action.type) {
-    case GOT_ORDER:
-      return action.order
+    case GOT_CART:
+      return action.cart
 
     case CREATED_ORDER_ITEM:
       return {...state, orderItems: [...state.orderItems, action.orderItem]}

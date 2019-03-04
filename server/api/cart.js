@@ -1,6 +1,19 @@
 const router = require('express').Router()
-const {OrderItem} = require('../db/models')
+const {Order, OrderItem} = require('../db/models')
 module.exports = router
+
+router.get('/', async (req, res, next) => {
+  try {
+    if (!req.session.cart) {
+      req.session.cart = {
+        orderItems: []
+      }
+    }
+    res.json(req.session.cart)
+  } catch (error) {
+    next(error)
+  }
+})
 
 router.put('/:productId', async (req, res, next) => {
   try {
