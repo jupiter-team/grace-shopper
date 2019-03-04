@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {fetchOrder} from '../store/order'
+import {fetchOrder} from '../store/cart'
 
 export const cartTotalPrice = cart => {
   return cart.orderItems.reduce(
@@ -51,7 +51,7 @@ class Cart extends Component {
 
 const mapStateToProps = state => {
   return {
-    cart: state.currentOrder,
+    cart: state.cart,
     user: state.user
   }
 }

@@ -1,7 +1,7 @@
 /* global describe beforeEach afterEach it */
 
 import {expect} from 'chai'
-import {fetchOrder} from './order'
+import {fetchOrder} from './cart'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import configureMockStore from 'redux-mock-store'
@@ -15,7 +15,7 @@ describe('thunk creators', () => {
   let store
   let mockAxios
 
-  const initialState = {currentOrder: {orderItems: []}}
+  const initialState = {cart: {orderItems: []}}
 
   beforeEach(() => {
     mockAxios = new MockAdapter(axios)
@@ -33,7 +33,7 @@ describe('thunk creators', () => {
       mockAxios.onGet('/api/orders/1').replyOnce(200, fakeOrder)
       await store.dispatch(fetchOrder(fakeOrder.id))
       const actions = store.getActions()
-      expect(actions[0].type).to.be.equal('GET_ORDER')
+      expect(actions[0].type).to.be.equal('GOT_ORDER')
       expect(actions[0].order).to.be.deep.equal(fakeOrder)
     })
   })
