@@ -1,11 +1,12 @@
 import axios from 'axios'
-// import history from '../history'
 
 // ACTION TYPES
+const GOT_CART = 'GOT_CART'
 const CREATED_NEW_ORDERITEM = 'CREATED_NEW_ORDERITEM'
 const UPDATED_ITEM_QUANTITY = 'UPDATED_ITEM_QUANTITY'
 
 // ACTION CREATOR
+const gotCart = cart => ({type: GOT_CART, cart})
 const createdNewOrderItem = orderItem => ({
   type: CREATED_NEW_ORDERITEM,
   orderItem
@@ -17,6 +18,15 @@ const updatedOrderItemQuantity = updatedOrderItem => ({
 })
 
 // THUNK CREATORS
+export const fetchCart = () => async dispatch => {
+  try {
+    const cart = await axios.get('/api/cart')
+    dispatch(gotCart(cart.data))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 export const createNewOrderItem = (productId, orderId) => async dispatch => {
   try {
     const res = await axios.post(`/api/cart/item/${orderId}`, {
@@ -68,6 +78,9 @@ const initialCart = {
 // REDUCER
 export default function(state = initialCart, action) {
   switch (action.type) {
+    case GOT_CART: {
+      return action.cart
+    }
     case CREATED_NEW_ORDERITEM:
       return {
         ...state,
@@ -82,8 +95,5 @@ export default function(state = initialCart, action) {
           )
         )
       }
-
-    default:
-      return state
   }
 }

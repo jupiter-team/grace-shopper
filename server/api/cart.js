@@ -2,6 +2,19 @@ const router = require('express').Router()
 const {Order, OrderItem} = require('../db/models')
 module.exports = router
 
+router.get('/', async (req, res, next) => {
+  try {
+    if (!req.session.cart) {
+      req.session.cart = {
+        orderItems: []
+      }
+    }
+    res.json(req.session.cart)
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.post('/item/:orderId', async (req, res, next) => {
   try {
     const orderItem = await OrderItem.create(req.body)
@@ -14,7 +27,6 @@ router.post('/item/:orderId', async (req, res, next) => {
 router.put('/item/:orderId', async (req, res, next) => {
   try {
     const orderItem = await OrderItem.findById(req.body.orderItemId)
-    // console.log("ORDERITEM QUANTITY ===>", orderItem.quantity)
     orderItem.quantity++
     const updatedOrderItem = await orderItem.update(orderItem)
     res.json(updatedOrderItem)
