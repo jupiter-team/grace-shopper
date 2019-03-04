@@ -9,21 +9,27 @@ const Navbar = ({handleClick, isLoggedIn}) => (
     <div className="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
       <ul className="navbar-nav mr-auto">
         <li className="nav-item active">
-          <a className="nav-link" href="#">
-            Our Teas
-          </a>
+          <Link to="/products/all">
+            <a className="nav-link" href="#">
+              Our Teas
+            </a>
+          </Link>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="#">
-            About
-          </a>
+          <Link to="/products/all">
+            <a className="nav-link" href="#">
+              About
+            </a>
+          </Link>
         </li>
       </ul>
     </div>
     <div className="mx-auto order-0">
-      <a className="navbar-brand mx-auto" href="#">
-        Jupiter Tea
-      </a>
+      <Link to="/">
+        <a className="navbar-brand mx-auto" href="#">
+          Jupiter Tea
+        </a>
+      </Link>
       <button
         className="navbar-toggler"
         type="button"
@@ -40,7 +46,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
         <li className="nav-item">
           {isLoggedIn ? (
             <div>
-              <Link to="/home">Home</Link>
+              <Link to="/">Home</Link>
               <a href="#" onClick={handleClick}>
                 Logout
               </a>
