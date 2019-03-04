@@ -42,26 +42,17 @@ class AllProducts extends Component {
     const products = this.props.products
     return (
       <div className="container">
-        <h3>All Products</h3>
         <div className="row">
-          {products ? (
+          {products && products.length ? (
             this.props.products.map(product => (
-              <div key={product.id}>
-                <div className="col-md-4" />
-                <img
-                  className="img-fluid"
-                  alt="Responsive image"
-                  src={product.imageUrl}
-                />
-                <h6 className="product-title">{product.name}</h6>
-                <p>{product.price}</p>
-                <button
-                  name={product.id}
-                  type="button"
-                  onClick={this.handleAddCart}
-                >
-                  Add to Cart
-                </button>
+              <div className="col-sm-6 col-lg-4" key={product.id}>
+                <div className="card">
+                  <img src={product.imageUrl} className="card-img-top" />
+                  <div className="card-body">
+                    <span className="product-title">{product.name}</span>
+                    <p className="product-price">${product.price}</p>
+                  </div>
+                </div>
               </div>
             ))
           ) : (
