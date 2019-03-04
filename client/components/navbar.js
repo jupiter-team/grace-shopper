@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {logout} from '../store'
+import {logout, fetchCart} from '../store'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
+const Navbar = ({handleClick, isLoggedIn, getCart}) => (
   <nav className="navbar navbar-expand-md navbar-light">
     <div className="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
       <ul className="navbar-nav mr-auto">
@@ -42,7 +42,9 @@ const Navbar = ({handleClick, isLoggedIn}) => (
     <div className="navbar-collapse collapse w-100 order-3 dual-collapse2">
       <ul className="navbar-nav ml-auto">
         <li className="nav-item" />
-        <Link to="/checkout">Cart</Link>
+        <Link to="/cart" onClick={getCart}>
+          Cart
+        </Link>
         <li className="nav-item">
           {isLoggedIn ? (
             <div>
@@ -76,6 +78,9 @@ const mapDispatch = dispatch => {
   return {
     handleClick() {
       dispatch(logout())
+    },
+    getCart() {
+      dispatch(fetchCart())
     }
   }
 }
