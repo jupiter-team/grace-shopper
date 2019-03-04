@@ -1,28 +1,41 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {fetchOrder} from '../store/order'
+import {fetchOrder, checkout} from '../store/order'
 
-const cartTotalPrice = cart => {
+export const cartTotalPrice = cart => {
   return cart.orderItems.reduce(
     (totalPrice, item) => totalPrice + item.quantity * item.product.price,
     0
   )
 }
 
+// We are currently setting dummy cartId but will later connect to user.
+const cartId = 1
+
 class Cart extends Component {
+  constructor() {
+    super()
+
+    this.handleCheckout = this.handleCheckout.bind(this)
+  }
+
   componentDidMount() {
     this.props.getCart(cartId)
   }
+
+  handleCheckout() {
+    this.props.checkout(this.props.cart)
+  }
+
   render() {
-    //We are currently setting dummy cartId but will later connect to user.
-    const cartId = 1
+    let cart
     //We are checking to see if there is a user logged in.
     if (this.props.user.id) {
-      const cart = this.props.cart
+      cart = this.props.cart
     } else {
       //We will get cart from session (this will be changed soon!)
-      const cart = {
+      cart = {
         orderItems: []
       }
     }
@@ -47,7 +60,9 @@ class Cart extends Component {
         </div>
         Total Price: {cartTotalPrice(cart) || 0}
         <button type="button">Remove All</button>
-        <button type="button">Checkout</button>
+        <button type="submit" onClick={this.handleCheckout}>
+          Checkout
+        </button>
       </div>
     )
   }
@@ -62,7 +77,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getCart: orderId => dispatch(fetchOrder(orderId))
+    getCart: orderId => dispatch(fetchOrder(orderId)),
+    checkout: cart => dispatch(checkout(cart))
   }
 }
 
