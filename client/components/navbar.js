@@ -16,7 +16,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           </Link>
         </li>
         <li className="nav-item">
-          <Link to="/products/all">
+          <Link to="/about">
             <a className="nav-link" href="#">
               About
             </a>
@@ -89,27 +89,3 @@ Navbar.propTypes = {
   handleClick: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
 }
-
-// const Navbar = ({handleClick, isLoggedIn}) => (
-//   <div>
-//     <h1>Tea Shop</h1>
-//     <nav>
-//       {isLoggedIn ? (
-//         <div>
-//           {/* The navbar will show these links after you log in */}
-//           <Link to="/home">Home</Link>
-//           <a href="#" onClick={handleClick}>
-//             Logout
-//           </a>
-//         </div>
-//       ) : (
-//         <div>
-//           {/* The navbar will show these links before you log in */}
-//           <Link to="/login">Login</Link>
-//           <Link to="/signup">Sign Up</Link>
-//         </div>
-//       )}
-//     </nav>
-//     <hr />
-//   </div>
-// )

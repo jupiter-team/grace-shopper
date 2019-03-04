@@ -35,7 +35,6 @@ const makeOrder = async (user, req, next) => {
       status: openOrder.status,
       orderItems: [...destructuredOrderItems]
     }
-    console.log(req.session.cart)
   } catch (error) {
     next(err)
   }
@@ -55,7 +54,7 @@ router.post('/login', async (req, res, next) => {
       makeOrder(user, req, next)
     }
   } catch (err) {
-    console.log(err)
+    console.error(err)
     next(err)
   }
 })
