@@ -1,5 +1,31 @@
+/*--------FONT FACE---------*/
+@font-face {
+  font-family: 'Centaur';
+  src: url('assets/fonts/Centaur.woff2') format('woff2'),
+    url('assets/fonts/Centaur.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Graphik';
+  src: url('assets/fonts/Graphik-Medium.woff2') format('woff2'),
+    url('assets/fonts/Graphik-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Canela';
+  src: url('assets/fonts/Canela-Regular.woff2') format('woff2'),
+    url('assets/fonts/Canela-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   font-family: sans-serif;
+  /* background-color: #d4cdce; */
 }
 
 a {
@@ -18,4 +44,95 @@ nav a {
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+/*--------TYPOGRAPHY---------*/
+h1,
+h2,
+h3 {
+  color: #1c1d1d;
+  font-family: 'Canela';
+  letter-spacing: 0.02em;
+}
+
+/* h3 {
+  color: #1c1d1d;
+  font-family: 'Graphik';
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+
+} */
+
+h3 {
+  color: #1c1d1d;
+  font-family: 'Graphik';
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+h1 .collection-title {
+  color: #1c1d1d;
+  font-family: 'Canela';
+  font-size: 30px;
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+
+/*-------NAV BAR--------*/
+.navbar-brand {
+  color: #1c1d1d;
+  font-family: 'Canela';
+  font-size: 52px;
+  letter-spacing: 0.02em;
+}
+
+.navbar-nav {
+  color: #1c1d1d;
+  font-family: 'Graphik';
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+}
+
+nav a {
+  color: #1c1d1d;
+}
+
+/* .navbar .brand, .navbar .nav > li > a:hover {
+  color: #F56E6E;
+} */
+
+/*--------CARDS---------*/
+
+.card {
+  border: none !important;
+  background-color: transparent !important;
+}
+
+/* .card .product-title {
+  color: #1c1d1d;
+  font-family: 'Centaur';
+  font-size: 17px;
+
+} */
+
+.card .product-title {
+  color: #1c1d1d;
+  font-family: 'Graphik';
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.card .product-price {
+  color: #595959;
+  font-family: 'Centaur';
+  font-size: 15px;
+  margin: 0.5em 0 0 0;
+}
+
+.card-body {
+  text-align: center;
 }
