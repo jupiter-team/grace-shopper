@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {fetchOrder} from '../store/cart'
+import {fetchCart} from '../store/cart'
 
 export const cartTotalPrice = cart => {
   return cart.orderItems.reduce(
@@ -10,12 +10,9 @@ export const cartTotalPrice = cart => {
   )
 }
 
-// We are currently setting dummy cartId but will later connect to user.
-const cartId = 1
-
 class Cart extends Component {
   componentDidMount() {
-    this.props.getCart(cartId)
+    this.props.getCart()
   }
 
   render() {
@@ -58,7 +55,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getCart: orderId => dispatch(fetchOrder(orderId))
+    getCart: () => dispatch(fetchCart())
   }
 }
 
