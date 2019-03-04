@@ -8,7 +8,6 @@ import {
   createNewOrder
 } from '../store'
 
-// COMPONENT
 class SingleProduct extends Component {
   constructor() {
     super()

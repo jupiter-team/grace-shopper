@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 
 import {fetchProducts} from '../store/all-products'
-import {createNewOrderItem, addOneToOrderItem, createNewOrder} from '../store'
 
 // COMPONENT
 class AllProducts extends Component {
@@ -15,30 +14,21 @@ class AllProducts extends Component {
     const products = this.props.products
     return (
       <div className="container">
-        <h3>All Products</h3>
         <div className="row">
           {products && products.length ? (
             this.props.products.map(product => (
-              <div key={product.id}>
-                <div className="col-md-4" />
-                <Link to={'/products/' + product.id}>
-                  <img
-                    className="img-fluid"
-                    alt="Responsive image"
-                    src={product.imageUrl}
-                  />
-                </Link>
-                <h6 className="product-title">
-                  <Link to={'/products/' + product.id}>{product.name}</Link>
-                </h6>
-                <p>{product.price}</p>
-                {/* <button
-                  name={product}
-                  type="button"
-                  onClick={this.handleAddToCart}
-                >
-                  Add to Cart
-                </button> */}
+              <div className="col-sm-6 col-lg-4" key={product.id}>
+                <div className="card">
+                  <Link to={'/products/' + product.id}>
+                    <img src={product.imageUrl} className="card-img-top" />
+                  </Link>
+                  <div className="card-body">
+                    <Link to={'/products/' + product.id}>
+                      <span className="product-title">{product.name}</span>
+                    </Link>
+                    <p className="product-price">${product.price}</p>
+                  </div>
+                </div>
               </div>
             ))
           ) : (

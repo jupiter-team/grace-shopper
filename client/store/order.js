@@ -11,10 +11,9 @@ const getOrder = order => ({type: GET_ORDER, order})
 export const fetchOrder = orderId => async dispatch => {
   try {
     const res = await axios.get(`/api/orders/${orderId}`)
-    const order = res.data
-    dispatch(getOrder(order))
+    dispatch(getOrder(res.data))
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 }
 
