@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 
 import {fetchProducts} from '../store/all-products'
 import {createNewOrderItem, addOneToOrderItem, createNewOrder} from '../store'
@@ -41,16 +42,20 @@ class AllProducts extends Component {
       <div className="container">
         <h3>All Products</h3>
         <div className="row">
-          {products ? (
+          {products && products.length ? (
             this.props.products.map(product => (
               <div key={product.id}>
                 <div className="col-md-4" />
-                <img
-                  className="img-fluid"
-                  alt="Responsive image"
-                  src={product.imageUrl}
-                />
-                <h6 className="product-title">{product.name}</h6>
+                <Link to={'/products/' + product.id}>
+                  <img
+                    className="img-fluid"
+                    alt="Responsive image"
+                    src={product.imageUrl}
+                  />
+                </Link>
+                <h6 className="product-title">
+                  <Link to={'/products/' + product.id}>{product.name}</Link>
+                </h6>
                 <p>{product.price}</p>
                 <button
                   name={product}
@@ -72,6 +77,7 @@ class AllProducts extends Component {
 
 const mapStateToProps = state => ({
   user: state.user,
+  products: state.products.allProducts,
   orderItems: state.cart.orderItems
 })
 

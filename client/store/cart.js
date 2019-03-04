@@ -2,25 +2,23 @@ import axios from 'axios'
 // import history from '../history'
 
 // ACTION TYPES
-// const  = 'FIND_OR_CREATE_CART'
+const CREATED_NEW_ORDERITEM = 'CREATED_NEW_ORDERITEM'
 
-// // ACTION CREATORS
-// const  = product => ({
-//   type: FIND_OR_CREATE_CART,
-//   product
-// })
+// ACTION CREATOR
+const createdNewOrderItem = orderItem => ({
+  type: CREATED_NEW_ORDERITEM,
+  orderItem
+})
 
 // THUNK CREATORS
-// export const createNewOrderItem = (productId, orderId) => {
-//   async dispatch => {
-//     try {
-//       const res = await axios.post(`/api/cart`, productId, orderId)
-//       dispatch(created(res.data))
-//     } catch (error) {
-//       console.error(error)
-//     }
-//   }
-// }
+export const createNewOrderItem = (productId, orderId) => async dispatch => {
+  try {
+    const res = await axios.post('/api/cart', {productId, orderId})
+    dispatch(createdNewOrderItem(res.data))
+  } catch (error) {
+    console.error(error)
+  }
+}
 
 // INITIAL STATE
 const initialCart = {
@@ -30,12 +28,10 @@ const initialCart = {
 // REDUCER
 export default function(state = initialCart, action) {
   switch (action.type) {
-    case UPDATED_ORDER_ITEM:
+    case CREATED_NEW_ORDERITEM:
       return {
         ...state,
-        orderItems: state.orderItems.filter(
-          orderItem => orderItem.id !== action.id
-        )
+        orderItems: [...state.orderItems, action.orderItem]
       }
 
     default:

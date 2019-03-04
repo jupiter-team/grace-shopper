@@ -38,16 +38,8 @@ router.post('/logout', (req, res) => {
   res.redirect('/')
 })
 
-// router.get('/me', async (req, res, next) => {
-//   try {
-//     const userId = req.session.cart.userId
-//     if (userId) {
-//       const user = await User.findById(userId)
-//       res.json(user)
-//     }
-//   } catch (err) {
-//     next(err)
-//   }
-// })
+router.get('/me', (req, res) => {
+  res.json(req.user)
+})
 
 router.use('/google', require('./google'))

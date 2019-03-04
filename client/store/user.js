@@ -15,21 +15,23 @@ const removedUser = () => ({
   type: REMOVED_USER
 })
 
-// THUNK CREATORS
-// export const getMe = () =>
-//   async dispatch => {
-//   try {
-//     const res = await axios.get('/auth/me')
-//     dispatch(gotUser(res.data))
-//   } catch (err) {
-//     console.error(err)
-//   }
-// }
+// INITIAL STATE
+const initialUser = {}
 
-export const auth = (email, password) => async dispatch => {
+// THUNK CREATORS
+export const me = () => async dispatch => {
+  try {
+    const res = await axios.get('/auth/me')
+    dispatch(gotUser(res.data || initialUser))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const auth = (email, password, method) => async dispatch => {
   let res
   try {
-    res = await axios.put(`/auth/login`, {email, password})
+    res = await axios.post(`/auth/login/${method}`, {email, password})
   } catch (authError) {
     return dispatch(gotUser({error: authError}))
   }
@@ -77,9 +79,6 @@ export const logout = () => async dispatch => {
     console.error(err)
   }
 }
-
-// INITIAL STATE
-const initialUser = {}
 
 // REDUCER
 export default function(state = initialUser, action) {
