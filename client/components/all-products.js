@@ -65,7 +65,7 @@ class AllProducts extends Component {
 }
 
 const mapStateToProps = state => ({
-  orderItems: state.currentOder.orderItems,
+  orderItems: state.cart.orderItems,
   products: state.products
 })
 
