@@ -10,9 +10,6 @@ export const cartTotalPrice = cart => {
   )
 }
 
-// We are currently setting dummy cartId but will later connect to user.
-const cartId = 1
-
 class Cart extends Component {
   componentDidMount() {
     this.props.getCart()

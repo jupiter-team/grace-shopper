@@ -10,25 +10,25 @@ const Navbar = ({handleClick, isLoggedIn, getCart}) => (
       <ul className="navbar-nav mr-auto">
         <li className="nav-item active">
           <Link to="/products/all">
-            <a className="nav-link" href="#">
+            <div className="nav-link" href="#">
               Our Teas
-            </a>
+            </div>
           </Link>
         </li>
         <li className="nav-item">
           <Link to="/about">
-            <a className="nav-link" href="#">
+            <div className="nav-link" href="#">
               About
-            </a>
+            </div>
           </Link>
         </li>
       </ul>
     </div>
     <div className="mx-auto order-0">
       <Link to="/">
-        <a className="navbar-brand mx-auto" href="#">
+        <div className="navbar-brand mx-auto" href="#">
           Jupiter Tea
-        </a>
+        </div>
       </Link>
       <button
         className="navbar-toggler"
@@ -47,9 +47,9 @@ const Navbar = ({handleClick, isLoggedIn, getCart}) => (
           {isLoggedIn ? (
             <div>
               <Link to="/">Home</Link>
-              <a href="#" onClick={handleClick}>
+              <div href="#" onClick={handleClick}>
                 Logout
-              </a>
+              </div>
             </div>
           ) : (
             <div>

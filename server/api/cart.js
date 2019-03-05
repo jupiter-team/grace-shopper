@@ -4,7 +4,6 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    console.log('Session from within api/cart:', req.session)
     if (!req.session.cart) {
       req.session.cart = {
         orderItems: []

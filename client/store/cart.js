@@ -22,7 +22,7 @@ const updatedOrderItemQuantity = updatedOrderItem => ({
 export const fetchCart = () => async dispatch => {
   try {
     const cart = await axios.get('/api/cart')
-    dispatch(gotCart(cart))
+    dispatch(gotCart(cart.data))
   } catch (error) {
     console.error(error)
   }
