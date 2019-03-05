@@ -6,7 +6,7 @@ import {logout} from '../store'
 
 const About = () => {
   const styles = {
-    width: '700px'
+    'max-width': '700px'
   }
 
   return (
