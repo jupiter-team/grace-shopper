@@ -35,13 +35,11 @@ a {
   text-decoration: none;
 }
 
+a:hover {
+  text-decoration: none !important;
+}
 label {
   display: block;
-}
-
-nav a {
-  display: inline-block;
-  margin: 1em;
 }
 
 form div {
@@ -82,6 +80,11 @@ body .about {
 }
 
 /*-------NAV BAR--------*/
+nav a {
+  display: inline-block;
+  margin: 1em;
+}
+
 .navbar-brand {
   color: #1c1d1d;
   font-family: 'Canela';
@@ -129,6 +132,61 @@ nav a {
 
 .card-body {
   text-align: center;
+}
+
+/*--------SINGLE PRODUCT PAGE--------*/
+h2.product-title {
+  color: #1c1d1d;
+  font-family: 'Canela';
+  font-size: 34px;
+  margin-top: 40px;
+  margin-bottom: 25px;
+  letter-spacing: 0.02em;
+}
+
+p.product-price {
+  font-size: 1.2rem;
+  margin-bottom: 25px;
+}
+
+.product-divider {
+  width: 20px;
+  border-top: 1px solid #222;
+  margin: 25px 0;
+}
+
+p.description {
+  line-height: 1.75rem;
+}
+
+/*--------BUTTONS---------*/
+button {
+  color: #1c1d1d;
+  font-family: 'Graphik';
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+  background-color: transparent;
+  border: 2px solid #000;
+  width: 140px;
+  height: 50px;
+  cursor: pointer;
+}
+
+button.add-to-cart {
+  color: #1c1d1d;
+  font-family: 'Graphik';
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+  background-color: transparent;
+  border: 2px solid #000;
+  width: 140px;
+  height: 50px;
+  cursor: pointer;
+  margin-top: 30px;
 }
 
 /*---------ABOUT----------*/

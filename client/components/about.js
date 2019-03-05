@@ -6,7 +6,7 @@ import {logout} from '../store'
 
 const About = () => {
   const styles = {
-    'max-width': '700px'
+    maxWidth: '700px'
   }
 
   return (
@@ -22,9 +22,7 @@ const About = () => {
       <div className="mx-auto" style={styles}>
         <p />
         <p />
-        <p>
-          <h1 className="text-center">Our Story</h1>
-        </p>
+        <h1 className="text-center">Our Story</h1>
       </div>
 
       <div className="mx-auto" style={styles}>
