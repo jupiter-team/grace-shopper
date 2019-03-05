@@ -42,9 +42,7 @@ const Navbar = ({handleClick, isLoggedIn, getCart}) => (
     <div className="navbar-collapse collapse w-100 order-3 dual-collapse2">
       <ul className="navbar-nav ml-auto">
         <li className="nav-item" />
-        <Link to="/cart" onClick={getCart}>
-          Cart
-        </Link>
+        <Link to="/cart">Cart</Link>
         <li className="nav-item">
           {isLoggedIn ? (
             <div>

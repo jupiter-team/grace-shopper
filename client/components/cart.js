@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {fetchCart} from '../store/cart'
+import {fetchCart} from '../store'
 
 export const cartTotalPrice = cart => {
   return cart.orderItems.reduce(
@@ -9,6 +9,9 @@ export const cartTotalPrice = cart => {
     0
   )
 }
+
+// We are currently setting dummy cartId but will later connect to user.
+const cartId = 1
 
 class Cart extends Component {
   componentDidMount() {

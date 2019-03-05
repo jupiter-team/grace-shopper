@@ -4,6 +4,7 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
+    console.log('Session from within api/cart:', req.session)
     if (!req.session.cart) {
       req.session.cart = {
         orderItems: []
@@ -24,20 +25,21 @@ router.put('/:productId', async (req, res, next) => {
     next(err)
   }
 })
-router.put('/:orderItemId', async (req, res, next) => {
+router.post('/item/:orderId', async (req, res, next) => {
   try {
-    const orderItem = await OrderItem.findById(req.params.orderItemId)
-    await orderItem.update(req.body)
-    res.sendStatus(200)
+    const orderItem = await OrderItem.create(req.body)
+    res.json(orderItem)
   } catch (err) {
     next(err)
   }
 })
-router.put('/:orderItemId', async (req, res, next) => {
+
+router.put('/item/:orderId', async (req, res, next) => {
   try {
-    const orderItem = await OrderItem.findById(req.params.orderItemId)
-    await orderItem.update(req.body)
-    res.sendStatus(200)
+    const orderItem = await OrderItem.findById(req.body.orderItemId)
+    orderItem.quantity++
+    const updatedOrderItem = await orderItem.update(orderItem)
+    res.json(updatedOrderItem)
   } catch (err) {
     next(err)
   }
@@ -47,6 +49,15 @@ router.put('/checkout', async (req, res, next) => {
     const submittedOrder = await Order.findById(req.session.cart.id)
     await submittedOrder.update({status: 'processing'})
     res.send(submittedOrder)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.post('/order/:userId', async (req, res, next) => {
+  try {
+    const order = await Order.create(req.body)
+    res.json(order)
   } catch (err) {
     next(err)
   }

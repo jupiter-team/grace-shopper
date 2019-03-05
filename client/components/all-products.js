@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-
+import {Link} from 'react-router-dom'
 import {fetchProducts} from '../store/all-products'
-
 import {createOrder, createOrderItem, updateOrderItem} from '../store/cart'
 
 // COMPONENT
@@ -47,9 +46,13 @@ class AllProducts extends Component {
             this.props.products.map(product => (
               <div className="col-sm-6 col-lg-4" key={product.id}>
                 <div className="card">
-                  <img src={product.imageUrl} className="card-img-top" />
+                  <Link to={'/products/' + product.id}>
+                    <img src={product.imageUrl} className="card-img-top" />
+                  </Link>
                   <div className="card-body">
-                    <span className="product-title">{product.name}</span>
+                    <Link to={'/products/' + product.id}>
+                      <span className="product-title">{product.name}</span>
+                    </Link>
                     <p className="product-price">${product.price}</p>
                   </div>
                 </div>
@@ -65,8 +68,9 @@ class AllProducts extends Component {
 }
 
 const mapStateToProps = state => ({
-  orderItems: state.cart.orderItems,
-  products: state.products
+  user: state.user,
+  products: state.products.allProducts,
+  orderItems: state.cart.orderItems
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {cartTotalPrice} from './cart'
-import {fetchOrder, userCheckout, guestCheckout} from '../store/cart'
+import {fetchCart, userCheckout, guestCheckout} from '../store/cart'
 
 const cartId = 1
 
@@ -79,7 +79,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getCart: orderId => dispatch(fetchOrder(orderId)),
+    getCart: () => dispatch(fetchCart()),
     userCheckout: () => dispatch(userCheckout()),
     guestCheckout: guestInfo => dispatch(userCheckout(guestInfo))
   }
