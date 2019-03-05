@@ -137,15 +137,15 @@ async function seed() {
 
   const orders = await Promise.all([
     Order.create({
-      memberId: '1',
+      userId: '1',
       status: 'fulfilled'
     }),
     Order.create({
-      memberId: '2',
+      userId: '2',
       status: 'processing'
     }),
     Order.create({
-      memberId: '1',
+      userId: '1',
       status: 'open'
     })
   ])
