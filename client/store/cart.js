@@ -1,4 +1,5 @@
 import axios from 'axios'
+// import history from '../history'
 
 // ACTION TYPES
 const GOT_CART = 'GOT_CART'
@@ -52,6 +53,34 @@ export const updateQuantityOfOrderItem = (
   }
 }
 
+export const updateOrderItem = orderItem => async dispatch => {
+  try {
+    const res = await axios.put(`/api/cart/${orderItem.id}`, orderItem)
+    dispatch(updatedOrderItem(res.data))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const guestCheckout = guestInfo => async dispatch => {
+  try {
+    const res = await axios.create('/guests', guestInfo)
+    const guest = res.data
+    dispatch(createOrder(null, guest.id))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const userCheckout = () => async dispatch => {
+  try {
+    const orderToSubmit = await order.put('/cart/submit')
+    dispatch(gotOrder(initialCart))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 export const createNewOrder = (userId, productId) => async dispatch => {
   try {
     const res = await axios.post(`/api/cart/order/${userId}`, {
@@ -95,5 +124,7 @@ export default function(state = initialCart, action) {
           )
         )
       }
+    default:
+      return state
   }
 }

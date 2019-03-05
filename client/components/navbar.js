@@ -2,33 +2,33 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {logout} from '../store'
+import {logout, fetchCart} from '../store'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
+const Navbar = ({handleClick, isLoggedIn, getCart}) => (
   <nav className="navbar navbar-expand-md navbar-light">
     <div className="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
       <ul className="navbar-nav mr-auto">
         <li className="nav-item active">
           <Link to="/products/all">
-            <a className="nav-link" href="#">
+            <div className="nav-link" href="#">
               Our Teas
-            </a>
+            </div>
           </Link>
         </li>
         <li className="nav-item">
           <Link to="/about">
-            <a className="nav-link" href="#">
+            <div className="nav-link" href="#">
               About
-            </a>
+            </div>
           </Link>
         </li>
       </ul>
     </div>
     <div className="mx-auto order-0">
       <Link to="/">
-        <a className="navbar-brand mx-auto" href="#">
+        <div className="navbar-brand mx-auto" href="#">
           Jupiter Tea
-        </a>
+        </div>
       </Link>
       <button
         className="navbar-toggler"
@@ -42,14 +42,14 @@ const Navbar = ({handleClick, isLoggedIn}) => (
     <div className="navbar-collapse collapse w-100 order-3 dual-collapse2">
       <ul className="navbar-nav ml-auto">
         <li className="nav-item" />
-        <Link to="/checkout">Cart</Link>
+        <Link to="/cart">Cart</Link>
         <li className="nav-item">
           {isLoggedIn ? (
             <div>
               <Link to="/">Home</Link>
-              <a href="#" onClick={handleClick}>
+              <div href="#" onClick={handleClick}>
                 Logout
-              </a>
+              </div>
             </div>
           ) : (
             <div>
@@ -76,6 +76,9 @@ const mapDispatch = dispatch => {
   return {
     handleClick() {
       dispatch(logout())
+    },
+    getCart() {
+      dispatch(fetchCart())
     }
   }
 }
