@@ -34,6 +34,15 @@ router.put('/item/:orderId', async (req, res, next) => {
     next(err)
   }
 })
+router.put('/checkout', async (req, res, next) => {
+  try {
+    const submittedOrder = await Order.findById(req.session.cart.id)
+    await submittedOrder.update({status: 'processing'})
+    res.send(submittedOrder)
+  } catch (err) {
+    next(err)
+  }
+})
 
 router.post('/order/:userId', async (req, res, next) => {
   try {
