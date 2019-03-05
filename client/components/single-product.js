@@ -2,11 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
 import {fetchSingleProduct} from '../store/all-products'
-import {
-  createNewOrderItem,
-  updateQuantityOfOrderItem,
-  createNewOrder
-} from '../store'
+import {createNewOrderItem} from '../store'
 
 class SingleProduct extends Component {
   constructor() {
@@ -20,22 +16,7 @@ class SingleProduct extends Component {
 
   handleAddToCart() {
     const product = this.props.selectedProduct
-    const user = this.props.user
-    const orderItems = this.props.orderItems
-
-    if (user && orderItems.length) {
-      const orderId = this.props.orderItems[0].orderId
-      const isExistOrderItem = orderItems.find(
-        orderItem => orderItem.productId === product.id
-      )
-      if (!isExistOrderItem) {
-        this.props.sendNewOrderItem(product.id, orderId)
-      } else {
-        this.props.sendQuantityUpdate(isExistOrderItem.id, orderId)
-      }
-    } else {
-      this.props.sendNewOrder(user.id, product.id)
-    }
+    this.props.sendNewOrderItem(product.id)
   }
 
   render() {
@@ -62,20 +43,13 @@ class SingleProduct extends Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.user,
-  orderItems: state.cart.orderItems,
   selectedProduct: state.products.selectedProduct
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   loadSingleProduct: () =>
     dispatch(fetchSingleProduct(ownProps.match.params.productId)),
-  sendNewOrderItem: (productId, orderId) =>
-    dispatch(createNewOrderItem(productId, orderId)),
-  sendQuantityUpdate: (orderItemId, orderId) =>
-    dispatch(updateQuantityOfOrderItem(orderItemId, orderId)),
-  sendNewOrder: (userId, productId) =>
-    dispatch(createNewOrder(userId, productId))
+  sendNewOrderItem: productId => dispatch(createNewOrderItem(productId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct)

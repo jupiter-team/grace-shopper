@@ -35,7 +35,7 @@ const makeOrder = async (user, req, next) => {
       status: openOrder.status,
       orderItems: [...destructuredOrderItems]
     }
-  } catch (error) {
+  } catch (err) {
     next(err)
   }
 }
