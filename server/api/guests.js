@@ -1,21 +1,24 @@
 const router = require('express').Router()
-const {Guest} = require('../db/models')
+const {Guest, Order, OrderItem} = require('../db/models')
 module.exports = router
 
 router.post('/', async (req, res, next) => {
   try {
-    const guest = Guest.create({
-      name: req.body.guestInfo.name,
-      address: req.body.guestInfo.address,
-      email: req.body.guestInfo.email,
-      orders: [
-        {
-          orderItems: req.session.cart.orderItems,
-          status: processing
-        }
-      ]
+    const guest = await Guest.create({
+      name: req.body.name,
+      address: req.body.address,
+      email: req.body.email
     })
-    res.send(guest)
+    const order = await Order.create({
+      guestId: guest.id,
+      status: 'processing'
+    })
+
+    orderItems = await OrderItems.bulkCreate(req.session.cart.orderItems, {
+      default: {orderId: order.id}
+    })
+    req.session.cart = {orderItems: []}
+    res.send(req.session.cart)
   } catch (err) {
     next(err)
   }

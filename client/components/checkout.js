@@ -3,19 +3,35 @@ import {connect} from 'react-redux'
 import {cartTotalPrice} from './cart'
 import {fetchCart, userCheckout, guestCheckout} from '../store/cart'
 
-const cartId = 1
-
 class Checkout extends Component {
-  componentDidMount() {
-    this.props.getCart(cartId)
+  constructor() {
+    super()
+    this.state = {
+      name: '',
+      address: '',
+      email: ''
+    }
+    this.handleChange = this.handleChange.bind(this)
+    this.guestSubmit = this.guestSubmit.bind(this)
+    this.userSubmit = this.userSubmit.bind(this)
   }
 
-  userSubmit() {
-    userCheckout()
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+    console.log(this.state)
+  }
+  userSubmit(event) {
+    event.preventDefault()
+    this.props.userCheckout()
   }
 
-  guestSubmit() {
-    guestCheckout(guestInfo)
+  guestSubmit(event) {
+    event.preventDefault()
+    const guestInfo = this.state
+    console.log('Guest Info in guestSubmit', guestInfo)
+    this.props.guestCheckout(guestInfo)
   }
 
   render() {
@@ -36,7 +52,7 @@ class Checkout extends Component {
         ))}
         Total Price: {cartTotalPrice(cart) || 0}
         <h3>Your Shipping Information:</h3>
-        {loggedInUser ? (
+        {loggedInUser.id ? (
           <div>
             <p>Name: {loggedInUser.name}</p>
             <p>Address: {loggedInUser.address}</p>
@@ -48,19 +64,19 @@ class Checkout extends Component {
               <label htmlFor="name">
                 <small>Name</small>
               </label>
-              <input name="name" type="text" />
+              <input name="name" type="text" onChange={this.handleChange} />
             </div>
             <div>
               <label htmlFor="email">
                 <small>Email</small>
               </label>
-              <input name="email" type="text" />
+              <input name="email" type="text" onChange={this.handleChange} />
             </div>
             <div>
               <label htmlFor="address">
                 <small>Address</small>
               </label>
-              <input name="address" type="text" />
+              <input name="address" type="text" onChange={this.handleChange} />
             </div>
             <button type="submit">Confirm order</button>
           </form>
@@ -81,7 +97,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getCart: () => dispatch(fetchCart()),
     userCheckout: () => dispatch(userCheckout()),
-    guestCheckout: guestInfo => dispatch(userCheckout(guestInfo))
+    guestCheckout: guestInfo => dispatch(guestCheckout(guestInfo))
   }
 }
 
