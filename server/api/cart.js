@@ -15,15 +15,6 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.put('/:productId', async (req, res, next) => {
-  try {
-    const orderItem = await OrderItem.findById(req.params.productId)
-    await orderItem.update(req.body)
-    res.send(res.session.cart)
-  } catch (err) {
-    next(err)
-  }
-})
 router.post('/item/:orderId', async (req, res, next) => {
   try {
     const orderItem = await OrderItem.create(req.body)
