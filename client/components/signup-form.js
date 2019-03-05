@@ -3,9 +3,6 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {signup} from '../store'
 
-/**
- * COMPONENT
- */
 const SignupForm = props => {
   const {handleSubmit, error} = props
 
@@ -82,9 +79,7 @@ const mapDispatch = dispatch => {
 
 export default connect(mapSignup, mapDispatch)(SignupForm)
 
-/**
- * PROP TYPES
- */
+// PROP TYPES
 SignupForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.object
