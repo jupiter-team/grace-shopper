@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-
 import {fetchProducts} from '../store/all-products'
 
 // COMPONENT
@@ -41,9 +40,7 @@ class AllProducts extends Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.user,
-  products: state.products.allProducts,
-  orderItems: state.cart.orderItems
+  products: state.products.allProducts
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -1,37 +1,106 @@
 const router = require('express').Router()
-const {Order, OrderItem} = require('../db/models')
+const {Order, OrderItem, Product} = require('../db/models')
 module.exports = router
 
 router.post('/item/:productId', async (req, res, next) => {
   try {
     const productId = req.body.productId
     const quantity = req.body.quantity
-    console.log('SESSION ===>', req.session)
-    if (req.session.passport.user) {
+    if (req.user) {
       const orderId = req.session.cart.orderId
+      const product = await Product.findById(productId)
       const orderItem = await OrderItem.create({productId, quantity, orderId})
-      req.session.cart.orderItems.push(orderItem)
+      req.session.cart.orderItems.push({
+        product,
+        quantity,
+        orderId
+      })
       res.json(orderItem)
     } else {
-      const newOrderItem = [{orderId: null, productId, quantity}]
+      const product = await Product.findById(productId)
+      const newOrderItem = {orderId: null, productId, quantity, product}
       if (!req.session.cart) {
-        req.session.cart.orderItems = [newOrderItem]
+        req.session.cart = {orderItems: [newOrderItem]}
       } else {
         req.session.cart.orderItems.push(newOrderItem)
       }
+      res.json(newOrderItem)
     }
-  } catch (err) {
-    next(err)
+  } catch (error) {
+    next(error)
   }
 })
 
 router.put('/item/:productId', async (req, res, next) => {
   try {
+    if (req.user) {
+      console.log(
+        'REQ.BODY.ISEXISTITEM.PRODUCT.ID ===>',
+        req.body.isExistItem.product.id
+      )
+
+      const orderItem = await OrderItem.findOne({
+        where: {
+          productId: req.body.isExistItem.product.id
+        }
+      })
+      orderItem.dataValues.quantity += req.body.quantity
+      // HERE!!
+      req.session.cart.orderItems = []
+        .concat(req.session.cart.orderItems)
+        .filter(oItem => oItem.id !== orderItem.id)
+      const updated = await orderItem.update(orderItem)
+      res.json(updated)
+    } else {
+      const existedOrderItem = req.session.cart.orderItems.find(
+        orderItem => orderItem.productId === req.body.isExistItem.productId
+      )
+      existedOrderItem.quantity += req.body.quantity
+      res.json(existedOrderItem)
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/', (req, res, next) => {
+  try {
+    if (!req.session.cart) {
+      req.session.cart = {
+        orderItems: []
+      }
+    }
+    res.json(req.session.cart)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.post('/item/:orderId', async (req, res, next) => {
+  try {
+    const orderItem = await OrderItem.create(req.body)
+    res.json(orderItem)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.put('/item/:orderId', async (req, res, next) => {
+  try {
     const orderItem = await OrderItem.findById(req.body.orderItemId)
-    // console.log("ORDERITEM QUANTITY ===>", orderItem.quantity)
     orderItem.quantity++
     const updatedOrderItem = await orderItem.update(orderItem)
     res.json(updatedOrderItem)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.put('/checkout', async (req, res, next) => {
+  try {
+    const submittedOrder = await Order.findById(req.session.cart.id)
+    await submittedOrder.update({status: 'processing'})
+    res.send(submittedOrder)
   } catch (err) {
     next(err)
   }

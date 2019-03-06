@@ -7,6 +7,10 @@ import {createNewOrderItem} from '../store'
 class SingleProduct extends Component {
   constructor() {
     super()
+    this.state = {
+      quantity: 0
+    }
+    this.handleOnChange = this.handleOnChange.bind(this)
     this.handleAddToCart = this.handleAddToCart.bind(this)
   }
 
@@ -16,7 +20,12 @@ class SingleProduct extends Component {
 
   handleAddToCart() {
     const product = this.props.selectedProduct
-    this.props.sendNewOrderItem(product.id)
+    const quantity = this.state.quantity
+    this.props.sendNewOrderItem(product.id, quantity)
+  }
+
+  handleOnChange(event) {
+    this.setState({quantity: Number(event.target.value)})
   }
 
   render() {
@@ -33,6 +42,14 @@ class SingleProduct extends Component {
           />
           <p>{product.description}</p>
           <p>{product.price}</p>
+          <span>Quantity: </span>
+          <input
+            type="number"
+            name="quantity"
+            min="1"
+            max="10"
+            onChange={this.handleOnChange}
+          />
           <button type="button" onClick={this.handleAddToCart}>
             Add to Cart
           </button>
@@ -49,7 +66,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch, ownProps) => ({
   loadSingleProduct: () =>
     dispatch(fetchSingleProduct(ownProps.match.params.productId)),
-  sendNewOrderItem: productId => dispatch(createNewOrderItem(productId))
+  sendNewOrderItem: (productId, quantity) =>
+    dispatch(createNewOrderItem(productId, quantity))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct)
