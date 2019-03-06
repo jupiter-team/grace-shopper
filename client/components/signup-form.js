@@ -7,44 +7,63 @@ const SignupForm = props => {
   const {handleSubmit, error} = props
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">
-            <small>Name</small>
-          </label>
-          <input name="name" type="text" />
+    <div className="container">
+      <div className="row justify-content-center">
+        <h2 className="collection-title">Create An Account</h2>
+      </div>
+
+      <div className="row justify-content-center">
+        <div className="col-sm-12 col-md-6">
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="name">
+                <small>Name</small>
+              </label>
+              <input name="name" type="text" className="form-control" />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="email">
+                <small>Email</small>
+              </label>
+              <input name="email" type="text" className="form-control" />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="address">
+                <small>Address</small>
+              </label>
+              <input name="address" type="text" className="form-control" />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="dob">
+                <small>Date of Birth</small>
+              </label>
+              <input name="dob" type="date" className="form-control" />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="password">
+                <small>Password</small>
+              </label>
+              <input name="password" type="password" className="form-control" />
+            </div>
+
+            <div>
+              <button type="submit">Sign up</button>
+            </div>
+
+            {error && error.response && <div> {error.response.data} </div>}
+
+            <div>
+              <h6 className="sign-up-google">
+                <a href="/auth/google">Sign up with Google</a>
+              </h6>
+            </div>
+          </form>
         </div>
-        <div>
-          <label htmlFor="email">
-            <small>Email</small>
-          </label>
-          <input name="email" type="text" />
-        </div>
-        <div>
-          <label htmlFor="address">
-            <small>Address</small>
-          </label>
-          <input name="address" type="text" />
-        </div>
-        <div>
-          <label htmlFor="dob">
-            <small>Date of Birth</small>
-          </label>
-          <input name="dob" type="date" />
-        </div>
-        <div>
-          <div>
-            <label htmlFor="password">
-              <small>Password</small>
-            </label>
-            <input name="password" type="password" />
-          </div>
-          <button type="submit">Sign up</button>
-        </div>
-        {error && error.response && <div> {error.response.data} </div>}
-      </form>
-      <a href="/auth/google">Sign up with Google</a>
+      </div>
     </div>
   )
 }

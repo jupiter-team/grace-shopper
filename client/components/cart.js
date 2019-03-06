@@ -21,29 +21,62 @@ class Cart extends Component {
     return (
       <div className="cart-page">
         <div className="container">
-          <div className="row justify-content-left">
+          <div className="row justify-content-center">
             <div className="col-sm-12" />
             <h2 className="shopping-cart-header">Shopping Cart</h2>
           </div>
-          <div className="items-list">
-            {cart.orderItems.map(item => (
-              <div className="item" key={item.id}>
-                <a>
-                  <img className="product-image" src={item.product.imageUrl} />
-                  <h4>{item.product.name}</h4>
-                </a>
-                <p>Quantity: {item.quantity}</p>
-                <p>Price: ${item.quantity * item.product.price}</p>
-                <button type="button">Remove Item</button>
-                <button type="button">Edit Quantity</button>
-              </div>
-            ))}
+
+          <div className="row justify-content-center">
+            <div className="col-sm-12 col-md-6">
+              {cart.orderItems.map(item => (
+                <div className="item" key={item.id}>
+                  <a>
+                    <img
+                      className="product-image"
+                      src={item.product.imageUrl}
+                    />
+                    <h4 className="cart-product-name">{item.product.name}</h4>
+                  </a>
+                  <p className="cart-product-details">
+                    Quantity: {item.quantity}
+                  </p>
+                  <p className="cart-product-details">
+                    Price: ${item.quantity * item.product.price}
+                  </p>
+                  <div>
+                    <button type="button" className="cart-btn">
+                      Remove Item
+                    </button>
+                    <button type="button" className="cart-btn">
+                      Edit Quantity
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-          Total Price: {cartTotalPrice(cart) || 0}
-          <button type="button">Remove All</button>
-          <Link to="/cart/checkout">
-            <button type="submit">Checkout</button>
-          </Link>
+
+          <div className="row justify-content-center">
+            <div className="col-sm-12 col-md-6">
+              <h6 className="total">Total: ${cartTotalPrice(cart) || 0}</h6>
+            </div>
+          </div>
+
+          {/*<div className="row justify-content-center">
+            <div className="col-sm-12 col-md-6">
+              <button type="button" className="cart-btn">Remove All</button>
+            </div>
+                </div>*/}
+
+          <div className="row justify-content-center">
+            <div className="col-sm-12 col-md-6">
+              <Link to="/cart/checkout">
+                <button type="submit" className="checkout-btn">
+                  Checkout
+                </button>
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     )

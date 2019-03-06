@@ -9,8 +9,8 @@ export const UserHome = props => {
   const {email} = props
 
   return (
-    <div>
-      <h3>Welcome, {email}</h3>
+    <div className="container">
+      <h2 className="collection-title">Welcome, {email}</h2>
     </div>
   )
 }
