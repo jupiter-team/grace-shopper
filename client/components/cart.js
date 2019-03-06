@@ -17,14 +17,13 @@ class Cart extends Component {
 
   render() {
     const cart = this.props.cart
-
     return (
       <div className="cart-page">
         Welcome To Your Cart!
         <div className="items-list">
           Your items:
-          {cart.orderItems.map(item => (
-            <div className="item" key={item.id}>
+          {cart.orderItems.map((item, idx) => (
+            <div className="item" key={idx}>
               <a>
                 <img src={item.product.imageUrl} />
                 <h4>{item.product.name}</h4>
