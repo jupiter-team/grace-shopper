@@ -8,7 +8,7 @@ class SingleProduct extends Component {
   constructor() {
     super()
     this.state = {
-      quantity: 0
+      quantity: 1
     }
     this.handleOnChange = this.handleOnChange.bind(this)
     this.handleAddToCart = this.handleAddToCart.bind(this)
