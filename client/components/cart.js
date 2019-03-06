@@ -17,7 +17,6 @@ class Cart extends Component {
 
   render() {
     const cart = this.props.cart
-
     return (
       <div className="cart-page">
         <div className="container">
@@ -28,8 +27,8 @@ class Cart extends Component {
 
           <div className="row justify-content-center">
             <div className="col-sm-12 col-md-6">
-              {cart.orderItems.map(item => (
-                <div className="item" key={item.id}>
+              {cart.orderItems.map(item, idx => (
+                <div className="item" key={idx}>
                   <a>
                     <img
                       className="product-image"
@@ -61,12 +60,6 @@ class Cart extends Component {
               <h6 className="total">Total: ${cartTotalPrice(cart) || 0}</h6>
             </div>
           </div>
-
-          {/*<div className="row justify-content-center">
-            <div className="col-sm-12 col-md-6">
-              <button type="button" className="cart-btn">Remove All</button>
-            </div>
-                </div>*/}
 
           <div className="row justify-content-center">
             <div className="col-sm-12 col-md-6">

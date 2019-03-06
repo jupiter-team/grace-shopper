@@ -2,15 +2,15 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
 import {fetchSingleProduct} from '../store/all-products'
-import {
-  createNewOrderItem,
-  updateQuantityOfOrderItem,
-  createNewOrder
-} from '../store'
+import {createNewOrderItem} from '../store'
 
 class SingleProduct extends Component {
   constructor() {
     super()
+    this.state = {
+      quantity: 1
+    }
+    this.handleOnChange = this.handleOnChange.bind(this)
     this.handleAddToCart = this.handleAddToCart.bind(this)
   }
 
@@ -20,22 +20,12 @@ class SingleProduct extends Component {
 
   handleAddToCart() {
     const product = this.props.selectedProduct
-    const user = this.props.user
-    const orderItems = this.props.orderItems
+    const quantity = this.state.quantity
+    this.props.sendNewOrderItem(product.id, quantity)
+  }
 
-    if (user && orderItems.length) {
-      const orderId = this.props.orderItems[0].orderId
-      const isExistOrderItem = orderItems.find(
-        orderItem => orderItem.productId === product.id
-      )
-      if (!isExistOrderItem) {
-        this.props.sendNewOrderItem(product.id, orderId)
-      } else {
-        this.props.sendQuantityUpdate(isExistOrderItem.id, orderId)
-      }
-    } else {
-      this.props.sendNewOrder(user.id, product.id)
-    }
+  handleOnChange(event) {
+    this.setState({quantity: Number(event.target.value)})
   }
 
   render() {
@@ -59,6 +49,14 @@ class SingleProduct extends Component {
             <div className="product-divider" />
             <p className="product-price">${product.price}</p>
             <p className="description">{product.description}</p>
+                <span>Quantity: </span>
+            <input
+              type="number"
+              name="quantity"
+              min="1"
+              max="10"
+              onChange={this.handleOnChange}
+            />
             <button
               type="button"
               className="add-to-cart"
@@ -74,20 +72,14 @@ class SingleProduct extends Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.user,
-  orderItems: state.cart.orderItems,
   selectedProduct: state.products.selectedProduct
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   loadSingleProduct: () =>
     dispatch(fetchSingleProduct(ownProps.match.params.productId)),
-  sendNewOrderItem: (productId, orderId) =>
-    dispatch(createNewOrderItem(productId, orderId)),
-  sendQuantityUpdate: (orderItemId, orderId) =>
-    dispatch(updateQuantityOfOrderItem(orderItemId, orderId)),
-  sendNewOrder: (userId, productId) =>
-    dispatch(createNewOrder(userId, productId))
+  sendNewOrderItem: (productId, quantity) =>
+    dispatch(createNewOrderItem(productId, quantity))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct)

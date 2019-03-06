@@ -8,14 +8,15 @@ const UPDATED_ITEM_QUANTITY = 'UPDATED_ITEM_QUANTITY'
 
 // ACTION CREATOR
 const gotCart = cart => ({type: GOT_CART, cart})
+
 const createdNewOrderItem = orderItem => ({
   type: CREATED_NEW_ORDERITEM,
   orderItem
 })
 
-const updatedOrderItemQuantity = updatedOrderItem => ({
+const updatedOrderItem = updated => ({
   type: UPDATED_ITEM_QUANTITY,
-  updatedOrderItem
+  updated
 })
 
 // THUNK CREATORS
@@ -28,35 +29,25 @@ export const fetchCart = () => async dispatch => {
   }
 }
 
-export const createNewOrderItem = (productId, orderId) => async dispatch => {
+export const createNewOrderItem = (productId, quantity) => async dispatch => {
   try {
-    const res = await axios.post(`/api/cart/item/${orderId}`, {
-      productId,
-      orderId,
-      quantity: 1
-    })
-    dispatch(createdNewOrderItem(res.data))
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-export const updateQuantityOfOrderItem = (
-  orderItemId,
-  orderId
-) => async dispatch => {
-  try {
-    const res = await axios.put(`/api/cart/item/${orderId}`, {orderItemId})
-    dispatch(updatedOrderItemQuantity(res.data))
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-export const updateOrderItem = orderItem => async dispatch => {
-  try {
-    const res = await axios.put(`/api/cart/${orderItem.id}`, orderItem)
-    dispatch(updatedOrderItem(res.data))
+    const {data: cart} = await axios.get('/api/cart')
+    const isExistItem = cart.orderItems.find(
+      orderItem => orderItem.product.id === productId
+    )
+    if (isExistItem) {
+      const res = await axios.put(`/api/cart/item/${productId}`, {
+        isExistItem,
+        quantity
+      })
+      dispatch(updatedOrderItem(res.data))
+    } else {
+      const res = await axios.post(`/api/cart/item/${productId}`, {
+        productId,
+        quantity
+      })
+      dispatch(createdNewOrderItem(res.data))
+    }
   } catch (error) {
     console.error(error)
   }
@@ -117,9 +108,9 @@ export default function(state = initialCart, action) {
     case UPDATED_ITEM_QUANTITY:
       return {
         ...state,
-        orderItems: [action.updatedOrderItem].concat(
+        orderItems: [action.updated].concat(
           state.orderItems.filter(
-            orderItem => orderItem.id !== action.updatedOrderItem.id
+            orderItem => orderItem.id !== action.updated.id
           )
         )
       }
