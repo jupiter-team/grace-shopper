@@ -45,7 +45,6 @@ router.put('/submit', async (req, res, next) => {
       status: newOrder.status,
       orderItems: []
     }
-    console.log('session cart,', req.session.cart)
     res.json(req.session.cart)
   } catch (err) {
     next(err)

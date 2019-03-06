@@ -20,7 +20,6 @@ class Checkout extends Component {
     this.setState({
       [event.target.name]: event.target.value
     })
-    console.log(this.state)
   }
   userSubmit(event) {
     event.preventDefault()
@@ -30,7 +29,6 @@ class Checkout extends Component {
   guestSubmit(event) {
     event.preventDefault()
     const guestInfo = this.state
-    console.log('Guest Info in guestSubmit', guestInfo)
     this.props.guestCheckout(guestInfo)
   }
 

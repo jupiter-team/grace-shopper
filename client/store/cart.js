@@ -64,7 +64,6 @@ export const updateOrderItem = orderItem => async dispatch => {
 
 export const guestCheckout = guestInfo => async dispatch => {
   try {
-    console.log('Here is the guest info', guestInfo)
     const res = await axios.post('/api/guests', guestInfo)
     dispatch(gotCart(res.data))
   } catch (error) {
