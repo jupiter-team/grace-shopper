@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const {Guest, Order, OrderItem} = require('../db/models')
+const {Product} = require('../db/models')
 module.exports = router
 
 router.post('/', async (req, res, next) => {
@@ -14,9 +15,12 @@ router.post('/', async (req, res, next) => {
       status: 'processing'
     })
 
-    orderItems = await OrderItems.bulkCreate(req.session.cart.orderItems, {
-      default: {orderId: order.id}
-    })
+    orderItemsForBulkCreate = req.session.cart.orderItems.map(item => ({
+      orderId: order.id,
+      productId: item.productId,
+      quantity: item.quantity
+    }))
+    orderItems = await OrderItem.bulkCreate(orderItemsForBulkCreate)
     req.session.cart = {orderItems: []}
     res.send(req.session.cart)
   } catch (err) {
