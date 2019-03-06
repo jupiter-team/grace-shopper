@@ -35,7 +35,6 @@ export const createNewOrderItem = (productId, quantity) => async dispatch => {
     const isExistItem = cart.orderItems.find(
       orderItem => orderItem.product.id === productId
     )
-    console.log('IS EXIST ===> ', isExistItem)
     if (isExistItem) {
       const res = await axios.put(`/api/cart/item/${productId}`, {
         isExistItem,
