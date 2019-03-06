@@ -166,6 +166,21 @@ p.description {
   line-height: 1.75rem;
 }
 
+/*--------CART------------*/
+h2.shopping-cart-header {
+  color: #1c1d1d;
+  font-family: 'Canela';
+  font-size: 34px;
+  margin-top: 40px;
+  margin-bottom: 25px;
+  letter-spacing: 0.02em;
+}
+
+img.product-image {
+  width: 200px;
+  height: 200px;
+}
+
 /*--------BUTTONS---------*/
 button {
   color: #1c1d1d;

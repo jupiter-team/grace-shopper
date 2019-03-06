@@ -20,27 +20,31 @@ class Cart extends Component {
 
     return (
       <div className="cart-page">
-        Welcome To Your Cart!
-        <div className="items-list">
-          Your items:
-          {cart.orderItems.map(item => (
-            <div className="item" key={item.id}>
-              <a>
-                <img src={item.product.imageUrl} />
-                <h4>{item.product.name}</h4>
-              </a>
-              <p>Quantity: {item.quantity}</p>
-              <p>Price: {item.quantity * item.product.price}</p>
-              <button type="button">Remove Item</button>
-              <button type="button">Edit Quantity</button>
-            </div>
-          ))}
+        <div className="container">
+          <div className="row justify-content-left">
+            <div className="col-sm-12" />
+            <h2 className="shopping-cart-header">Shopping Cart</h2>
+          </div>
+          <div className="items-list">
+            {cart.orderItems.map(item => (
+              <div className="item" key={item.id}>
+                <a>
+                  <img className="product-image" src={item.product.imageUrl} />
+                  <h4>{item.product.name}</h4>
+                </a>
+                <p>Quantity: {item.quantity}</p>
+                <p>Price: ${item.quantity * item.product.price}</p>
+                <button type="button">Remove Item</button>
+                <button type="button">Edit Quantity</button>
+              </div>
+            ))}
+          </div>
+          Total Price: {cartTotalPrice(cart) || 0}
+          <button type="button">Remove All</button>
+          <Link to="/cart/checkout">
+            <button type="submit">Checkout</button>
+          </Link>
         </div>
-        Total Price: {cartTotalPrice(cart) || 0}
-        <button type="button">Remove All</button>
-        <Link to="/cart/checkout">
-          <button type="submit">Checkout</button>
-        </Link>
       </div>
     )
   }
