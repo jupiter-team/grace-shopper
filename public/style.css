@@ -108,6 +108,13 @@ nav a {
   color: #F56E6E;
 } */
 
+/*--------HOME PAGE CAROUSEL--------*/
+
+.carousel-inner img {
+  width: 100%;
+  height: 100%;
+}
+
 /*--------CARDS---------*/
 
 .card {
