@@ -56,9 +56,8 @@ export const createNewOrderItem = (productId, quantity) => async dispatch => {
 
 export const guestCheckout = guestInfo => async dispatch => {
   try {
-    const res = await axios.create('/guests', guestInfo)
-    const guest = res.data
-    dispatch(createOrder(null, guest.id))
+    const res = await axios.post('/api/guests', guestInfo)
+    dispatch(gotCart(res.data))
   } catch (error) {
     console.error(error)
   }
@@ -66,8 +65,8 @@ export const guestCheckout = guestInfo => async dispatch => {
 
 export const userCheckout = () => async dispatch => {
   try {
-    const orderToSubmit = await order.put('/cart/submit')
-    dispatch(gotOrder(initialCart))
+    const res = await axios.put('/api/cart/submit')
+    dispatch(gotCart(res.data))
   } catch (error) {
     console.error(error)
   }

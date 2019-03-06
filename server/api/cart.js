@@ -96,11 +96,18 @@ router.put('/item/:orderId', async (req, res, next) => {
   }
 })
 
-router.put('/checkout', async (req, res, next) => {
+router.put('/submit', async (req, res, next) => {
   try {
-    const submittedOrder = await Order.findById(req.session.cart.id)
-    await submittedOrder.update({status: 'processing'})
-    res.send(submittedOrder)
+    const OrderToSubmit = await Order.findById(req.session.cart.orderId)
+    const submittedOrder = await OrderToSubmit.update({status: 'processing'})
+    const newOrder = await Order.create({status: 'open', userId: req.user.id})
+    req.session.cart = {
+      orderId: newOrder.id,
+      userId: newOrder.userId,
+      status: newOrder.status,
+      orderItems: []
+    }
+    res.json(req.session.cart)
   } catch (err) {
     next(err)
   }
