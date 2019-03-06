@@ -43,18 +43,30 @@ class SingleProduct extends Component {
 
     return (
       <div className="container">
-        <div key={product.id}>
-          <h3>{product.name}</h3>
-          <img
-            className="img-fluid"
-            alt="Responsive image"
-            src={product.imageUrl}
-          />
-          <p>{product.description}</p>
-          <p>{product.price}</p>
-          <button type="button" onClick={this.handleAddToCart}>
-            Add to Cart
-          </button>
+        <div className="row">
+          <div className="col-sm-12 col-md-7">
+            <div key={product.id}>
+              <img
+                className="img-fluid"
+                alt="Responsive image"
+                src={product.imageUrl}
+              />
+            </div>
+          </div>
+
+          <div className="col-sm-12 col-md-5">
+            <h2 className="product-title">{product.name}</h2>
+            <div className="product-divider" />
+            <p className="product-price">${product.price}</p>
+            <p className="description">{product.description}</p>
+            <button
+              type="button"
+              className="add-to-cart"
+              onClick={this.handleAddToCart}
+            >
+              Add to Cart
+            </button>
+          </div>
         </div>
       </div>
     )
