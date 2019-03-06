@@ -63,7 +63,7 @@ router.put('/item/:productId', async (req, res, next) => {
   }
 })
 
-router.get('/', (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     if (!req.session.cart) {
       req.session.cart = {
