@@ -35,50 +35,97 @@ class Checkout extends Component {
   render() {
     const {cart, loggedInUser} = this.props
     return (
-      <div>
-        <h1>Please confirm the order below:</h1>
-        Your items:
-        {cart.orderItems.map(item => (
-          <div className="item" key={item.id}>
-            <a>
-              <img src={item.product.imageUrl} />
-              <h4>{item.product.name}</h4>
-            </a>
-            <p>Quantity: {item.quantity}</p>
-            <p>Price: {item.quantity * item.product.price}</p>
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-sm-12" />
+          <h2 className="shopping-cart-header">
+            Please Confirm Your Order Below:
+          </h2>
+        </div>
+
+        <div className="row justify-content-center">
+          <div className="col-sm-12 col-md-6">
+            {cart.orderItems.map(item => (
+              <div className="item" key={item.id}>
+                <a>
+                  <img className="product-image" src={item.product.imageUrl} />
+                  <h4 className="cart-product-name">{item.product.name}</h4>
+                </a>
+                <p className="cart-product-details">
+                  Quantity: {item.quantity}
+                </p>
+                <p className="cart-product-details">
+                  Price: ${item.quantity * item.product.price}
+                </p>
+                <div>
+                  <button type="button" className="cart-btn">
+                    Remove Item
+                  </button>
+                  <button type="button" className="cart-btn">
+                    Edit Quantity
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-        Total Price: {cartTotalPrice(cart) || 0}
-        <h3>Your Shipping Information:</h3>
-        {loggedInUser.id ? (
-          <div>
-            <p>Name: {loggedInUser.name}</p>
-            <p>Address: {loggedInUser.address}</p>
-            <button onClick={this.userSubmit}>Confirm order</button>
+        </div>
+
+        <div className="row justify-content-center">
+          <div className="col-sm-12 col-md-6">
+            <h6 className="total">Total: ${cartTotalPrice(cart) || 0}</h6>
           </div>
-        ) : (
-          <form onSubmit={this.guestSubmit}>
-            <div>
-              <label htmlFor="name">
-                <small>Name</small>
-              </label>
-              <input name="name" type="text" onChange={this.handleChange} />
-            </div>
-            <div>
-              <label htmlFor="email">
-                <small>Email</small>
-              </label>
-              <input name="email" type="text" onChange={this.handleChange} />
-            </div>
-            <div>
-              <label htmlFor="address">
-                <small>Address</small>
-              </label>
-              <input name="address" type="text" onChange={this.handleChange} />
-            </div>
-            <button type="submit">Confirm order</button>
-          </form>
-        )}
+        </div>
+
+        <div className="row justify-content-center">
+          <div className="col-sm-12 col-md-6">
+            <h2 className="shopping-cart-header">Your Shipping Information:</h2>
+            {loggedInUser.id ? (
+              <div>
+                <h6 className="shipping-information">Name:</h6>{' '}
+                <p>{loggedInUser.name}</p>
+                <h6 className="shipping-information">Address:</h6>{' '}
+                <p>{loggedInUser.address}</p>
+                <button
+                  type="button"
+                  className="checkout-btn"
+                  onClick={this.userSubmit}
+                >
+                  Confirm order
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={this.guestSubmit}>
+                <div>
+                  <label htmlFor="name">
+                    <small>Name</small>
+                  </label>
+                  <input name="name" type="text" onChange={this.handleChange} />
+                </div>
+                <div>
+                  <label htmlFor="email">
+                    <small>Email</small>
+                  </label>
+                  <input
+                    name="email"
+                    type="text"
+                    onChange={this.handleChange}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="address">
+                    <small>Address</small>
+                  </label>
+                  <input
+                    name="address"
+                    type="text"
+                    onChange={this.handleChange}
+                  />
+                </div>
+                <button type="submit">Confirm order</button>
+              </form>
+            )}
+          </div>
+        </div>
       </div>
     )
   }
